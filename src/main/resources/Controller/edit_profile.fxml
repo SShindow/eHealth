@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EditProfileController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../stuff/background.jpg" />
+               </image>
+            </ImageView>
+            <AnchorPane layoutX="70.0" layoutY="58.0" prefHeight="284.0" prefWidth="459.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Label layoutX="26.0" layoutY="13.0" text="First name:" />
+                  <TextField layoutX="26.0" layoutY="32.0" prefHeight="26.0" prefWidth="175.0" promptText="Your first name" />
+                  <Label layoutX="26.0" layoutY="64.0" text="Last name:" />
+                  <TextField layoutX="26.0" layoutY="83.0" prefHeight="26.0" prefWidth="175.0" promptText="Your last name" />
+                  <DatePicker layoutX="26.0" layoutY="138.0" prefHeight="26.0" prefWidth="175.0" />
+                  <Label layoutX="26.0" layoutY="119.0" text="Date of Birth" />
+                  <Label layoutX="26.0" layoutY="171.0" text="Gender" />
+                  <RadioButton fx:id="rb_male" layoutX="27.0" layoutY="191.0" mnemonicParsing="false" text="Male" />
+                  <RadioButton fx:id="rb_female" layoutX="80.0" layoutY="191.0" mnemonicParsing="false" text="Female" />
+                  <RadioButton fx:id="rb_other" layoutX="144.0" layoutY="191.0" mnemonicParsing="false" text="Other" />
+                  <Label layoutX="26.0" layoutY="217.0" text="Address information" />
+                  <TextField layoutX="26.0" layoutY="235.0" prefHeight="26.0" prefWidth="175.0" promptText="Your address" />
+                  <Label layoutX="262.0" layoutY="13.0" text="Insurance ID:" />
+                  <TextField layoutX="262.0" layoutY="32.0" prefHeight="26.0" prefWidth="175.0" promptText="For example: 1234" />
+                  <Label layoutX="262.0" layoutY="64.0" text="Insurance Type:" />
+                  <RadioButton fx:id="rb_private" layoutX="262.0" layoutY="85.0" mnemonicParsing="false" text="Private" />
+                  <RadioButton fx:id="rb_public" layoutX="344.0" layoutY="85.0" mnemonicParsing="false" text="Public" />
+                  <Button layoutX="303.0" layoutY="115.0" mnemonicParsing="false" style="-fx-background-color: #4BBFE6;" text="Save Changes" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="323.0" layoutY="151.0" mnemonicParsing="false" style="-fx-background-color: #4BBFE6;" text="Cancel" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
