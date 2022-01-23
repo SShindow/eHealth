@@ -1,6 +1,7 @@
 package Controller;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -59,6 +60,15 @@ public class EditProfileController implements Initializable {
 //        Default setting for the radio button
         rb_male.setSelected(true);
         rb_private.setSelected(true);
+
+        button_save.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String Gender = ((RadioButton) toggleGender.getSelectedToggle()).getText();
+                String InsuranceType = ((RadioButton) toggleType.getSelectedToggle()).getText();
+            }
+        });
+
     }
 
     public void cancelButtonOnAction(ActionEvent event) throws Exception{
@@ -70,8 +80,4 @@ public class EditProfileController implements Initializable {
         stage.show();
     };
 
-    public void saveChangesButtonOnAction() throws Exception{
-            String gender = ((RadioButton) toggleGender.getSelectedToggle().getText());
-        String insuranceType = ((RadioButton) toggleType.getSelectedToggle().getText());
-    }
 }

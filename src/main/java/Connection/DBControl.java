@@ -17,17 +17,19 @@ public class DBControl {
     public Connection databaseLink;
 
     public Connection getConnection(){
-        String databaseName = "new_schema";
-        String databaseUser = "root";
-        String databasePassword = "Caoxuanhai1811";
-        String url = "jdbc:mysql://localhost:3306/" + databaseName;
+        String databaseName = "ehealth";
+        String databaseUser = "admin";
+        String databasePassword = "vgustudent";
+        String url = "jdbc:mysql://ehealth-db.cqajckw84dii.us-east-1.rds.amazonaws.com:3306/" + databaseName;
 
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             databaseLink = DriverManager.getConnection(url,databaseUser,databasePassword);
+            System.out.println("DB Connected");
         }catch (Exception e){
             e.printStackTrace();
             e.getCause();
+            System.out.println("Sai cmnr");
         }
         return databaseLink;
     }

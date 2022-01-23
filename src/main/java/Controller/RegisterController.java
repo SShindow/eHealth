@@ -37,7 +37,7 @@ public class RegisterController implements Initializable {
     @FXML
     private TextField tf_username;
     @FXML
-    private TextField tf_email;
+    private TextField tf_email_address;
 
     @FXML
     private PasswordField field_password;
@@ -79,7 +79,7 @@ public class RegisterController implements Initializable {
 
         String username = tf_username.getText();
         String password = field_password.getText();
-        String email_address = tf_email.getText();
+        String email_address = tf_email_address.getText();
 
         String insertField = "INSERT INTO customer(username, password, email_address) VALUES ('";
         String insertValue = username + "','" + password + "','" + email_address + "')";

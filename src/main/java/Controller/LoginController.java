@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
@@ -56,14 +57,14 @@ public class LoginController implements Initializable {
 
     public void loginButtonOnAction() throws IOException {
 //       if the username is not blank, go to the log in function to confirm account exist
-        if (tf_username.getText().isBlank() == false && field_password.getText().isBlank() == false){
+        if (tf_username.getText().isBlank() == false && field_password.getText().isBlank() == false) {
             validateLogin();
-        } else{
+        } else {
             label_loginmessage.setText("Please enter username and password");
         }
     }
 
-    public void cancelButtonOnAction(ActionEvent event){
+    public void cancelButtonOnAction(ActionEvent event) {
 //        Close the application
         Stage stage = (Stage) button_cancel.getScene().getWindow();
         stage.close();
@@ -72,40 +73,56 @@ public class LoginController implements Initializable {
     public void registerButtonOnAction(ActionEvent event) throws Exception {
 //        Switch to register stage
         Parent root = FXMLLoader.load(getClass().getResource("register.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void validateLogin(){
+    public void validateLogin() {
 //        Connect to Database
         DBControl connectNow = new DBControl();
         Connection connectDB = connectNow.getConnection();
 
-        String verifyLogin = "SELECT * FROM customer WHERE username = '" + tf_username.getText() + "' AND password = '" + field_password.getText() + "' ";
+//        String verifyLogin = "SELECT * FROM customer WHERE username = '" + tf_username.getText() + "' AND password = '" + field_password.getText() + "' ";
+        String sql = "SELECT password FROM customer WHERE username = '" + tf_username.getText() + "'";
 
-        try{
-            Statement statement = connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(verifyLogin);
+        try {
+            Statement st = connectDB.createStatement();
+            ResultSet rs = st.executeQuery(sql);
 
-            while(queryResult.next()){
-                if (queryResult.getInt(1) == 1){
-                    label_loginmessage.setText("Login Successfully!");
-                    ActionEvent event = new ActionEvent();
-                    Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
-                    Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-
-                } else{
-                    label_loginmessage.setText("Invalid credentials! Please try again.");
-                }
+            rs.next();
+            String DBUserPassword = rs.getString(1);
+            String inputPassword = field_password.getText();
+            if (DBUserPassword.equals(inputPassword)) {
+                label_loginmessage.setText("Login Successfully!");
+                ActionEvent event = new ActionEvent();
+                Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
             }
-        } catch (Exception e){
-            e.printStackTrace();
-            e.getCause();
+
+
+//            while(queryResult.next()){
+//                if (queryResult.getInt(1) == 1 && field_password == ){
+//                    label_loginmessage.setText("Login Successfully!");
+////                    ActionEvent event = new ActionEvent();
+////                    Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
+////                    Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+////                    Scene scene = new Scene(root);
+////                    stage.setScene(scene);
+////                    stage.show();
+//
+//                }
+            else {
+                label_loginmessage.setText("Invalid credentials! Please try again.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }
