@@ -36,7 +36,7 @@ public class AfterLoginController implements Initializable{
     @FXML
     private Button button_bookappointment;
     @FXML
-    private Button button_exportpdf;
+    private Button button_viewappointment;
     @FXML
     private Button button_signout;
 
@@ -69,7 +69,7 @@ public class AfterLoginController implements Initializable{
         stage.show();
     }
 
-    public void exportToPDFButtonOnAction(){
+    public void viewAppointmentButtonOnAction(){
     }
 
     public void signoutButtonOnAction(ActionEvent event) throws Exception{

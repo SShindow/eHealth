@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.BookAppointmentController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="image_background" fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../stuff/background.jpg" />
+               </image>
+            </ImageView>
+            <AnchorPane layoutX="200.0" layoutY="50.0" prefHeight="300.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Label layoutX="16.0" layoutY="26.0" text="Booking an Appointment">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="55.0" text="Enter your Symptoms" />
+                  <ChoiceBox fx:id="choice_symptoms" layoutX="15.0" layoutY="75.0" prefHeight="26.0" prefWidth="168.0" />
+                  <Label layoutX="17.0" layoutY="112.0" text="Additional Information" />
+                  <TextField fx:id="tf_additionalinfo" layoutX="16.0" layoutY="132.0" prefHeight="26.0" prefWidth="168.0" />
+                  <Label layoutX="16.0" layoutY="175.0" text="Distance (kilometers)" />
+                  <Spinner fx:id="spinner_distance" layoutX="129.0" layoutY="170.0" prefHeight="26.0" prefWidth="53.0" />
+                  <Button fx:id="button_search" layoutX="66.0" layoutY="215.0" mnemonicParsing="false" onAction="#searchButtonOnAction" prefHeight="26.0" prefWidth="66.0" style="-fx-background-color: #4BBFE6;" text="SEARCH" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="button_cancel" layoutX="66.0" layoutY="249.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="26.0" prefWidth="66.0" style="-fx-background-color: #4BBFE6;" text="CANCEL" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
