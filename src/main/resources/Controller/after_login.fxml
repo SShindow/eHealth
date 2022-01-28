@@ -26,7 +26,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="button_bookappointment" layoutX="29.0" layoutY="154.0" mnemonicParsing="false" style="-fx-background-color: #4BBFE6;" text="Book an Appointment" textFill="WHITE">
+                  <Button fx:id="button_bookappointment" layoutX="29.0" layoutY="154.0" mnemonicParsing="false" onAction="#bookAppointmentButtonOnActon" style="-fx-background-color: #4BBFE6;" text="Book an Appointment" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -36,7 +36,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="button_signout" layoutX="66.0" layoutY="238.0" mnemonicParsing="false" style="-fx-background-color: #4BBFE6;" text="Sign out" textFill="WHITE">
+                  <Button fx:id="button_signout" layoutX="66.0" layoutY="238.0" mnemonicParsing="false" onAction="#signoutButtonOnAction" style="-fx-background-color: #4BBFE6;" text="Sign out" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
