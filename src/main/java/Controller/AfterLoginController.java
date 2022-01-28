@@ -63,11 +63,12 @@ public class AfterLoginController implements Initializable{
     public void bookAppointmentButtonOnActon(ActionEvent event) throws Exception{
 //        Switch to edit profile stage
         Parent root = FXMLLoader.load(getClass().getResource("book_appointment.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+
 
     public void viewAppointmentButtonOnAction(){
     }

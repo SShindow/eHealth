@@ -13,18 +13,22 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.stage.StageStyle;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.sql.*;
+import java.util.Arrays;
 import java.util.ResourceBundle;
-
 
 
 public class LoginController implements Initializable {
@@ -48,6 +52,9 @@ public class LoginController implements Initializable {
     @FXML
     private ImageView image_background;
 
+    //Used for After-Login (e.g: EditProfile) page(s)
+    public static String loggedInUsername = "";
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         File backgroundFile = new File("stuff/background.jpg");
@@ -55,14 +62,22 @@ public class LoginController implements Initializable {
         image_background.setImage(backgroundImage);
     }
 
-    public void loginButtonOnAction() throws IOException {
+    public void loginButtonOnAction(ActionEvent event) throws IOException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
 //       if the username is not blank, go to the log in function to confirm account exist
-        if (tf_username.getText().isBlank() == false && field_password.getText().isBlank() == false) {
-            validateLogin();
+        if (tf_username.getText().isBlank() == false && field_password.getText().isBlank() == false && validateLogin()) {
+;
+//            //Switch to log in scene
+            Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
         } else {
-            label_loginmessage.setText("Please enter username and password");
+            label_loginmessage.setText("Invalid credentials! Please try again.");
         }
     }
+
 
     public void cancelButtonOnAction(ActionEvent event) {
 //        Close the application
@@ -79,50 +94,66 @@ public class LoginController implements Initializable {
         stage.show();
     }
 
-    public void validateLogin() {
-//        Connect to Database
-        DBControl connectNow = new DBControl();
-        Connection connectDB = connectNow.getConnection();
+    public boolean validateLogin() throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException, IOException {
 
-//        String verifyLogin = "SELECT * FROM customer WHERE username = '" + tf_username.getText() + "' AND password = '" + field_password.getText() + "' ";
-        String sql = "SELECT password FROM customer WHERE username = '" + tf_username.getText() + "'";
+        // Get Input from user
+        String username = tf_username.getText();
+        String password = field_password.getText();
 
-        try {
-            Statement st = connectDB.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-
-            rs.next();
-            String DBUserPassword = rs.getString(1);
-            String inputPassword = field_password.getText();
-            if (DBUserPassword.equals(inputPassword)) {
-                label_loginmessage.setText("Login Successfully!");
-                ActionEvent event = new ActionEvent();
-                Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            }
+        // Get salt and calculate hashedPassword to compare in Database. If match Login is successful.
+        byte[] salt = getSaltFromDBUsername(username);
+        byte[] hashedPassword;
+        if(salt.length == 0)
+        {
+            label_loginmessage.setText("Invalid credentials! Please try again.");
+            return false;
+        }
+        else
+        hashedPassword = generateHashedPassword(password, salt);
 
 
-//            while(queryResult.next()){
-//                if (queryResult.getInt(1) == 1 && field_password == ){
-//                    label_loginmessage.setText("Login Successfully!");
-////                    ActionEvent event = new ActionEvent();
-////                    Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
-////                    Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-////                    Scene scene = new Scene(root);
-////                    stage.setScene(scene);
-////                    stage.show();
-//
-//                }
-            else {
-                label_loginmessage.setText("Invalid credentials! Please try again.");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        if (isHashedPasswordCorrect(username, hashedPassword) == true) {
+            label_loginmessage.setText("Login Successfully!");
+            loggedInUsername = username;
+        return true;
+        } else {
+            System.out.println("Wrong password");
+            label_loginmessage.setText("Invalid credentials! Please try again.");
+            return false;
         }
     }
+
+    byte[] getSaltFromDBUsername(String DBUsername) throws SQLException {
+        //Connection connection = getConnection();
+        String query = "SELECT salt FROM user WHERE username= ?";
+        PreparedStatement pst = DBControl.dbConnection.prepareStatement(query);
+        pst.setString(1, DBUsername);
+        ResultSet rs = pst.executeQuery();
+        if (!rs.next()) {
+            System.out.println("No salt data of username:" + DBUsername);
+            byte[] emptyByte = {};
+            return emptyByte;
+        }
+        byte[] importedSalt = rs.getBytes(1);
+        return importedSalt;
+    }
+
+    byte[] generateHashedPassword(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        byte[] hashedPassword = factory.generateSecret(spec).getEncoded();
+        return hashedPassword;
+    }
+
+    boolean isHashedPasswordCorrect(String DBUsername, byte[] hashedPassword) throws SQLException {
+        //Connection connection = getConnection();
+        String query = "SELECT hashedPassword FROM user WHERE username= ?";
+        PreparedStatement pst = DBControl.dbConnection.prepareStatement(query);
+        pst.setString(1, DBUsername);
+        ResultSet rs = pst.executeQuery();
+        rs.next();
+        byte[] importedHashedPassword = rs.getBytes(1);
+        return Arrays.equals(hashedPassword, importedHashedPassword);
+    }
+
 }

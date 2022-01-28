@@ -14,24 +14,34 @@ import java.sql.DriverManager;
 public class DBControl {
 
 
-    public Connection databaseLink;
+    static public Connection dbConnection;
 
-    public Connection getConnection(){
+    static public void connectToDatabase() {
         String databaseName = "ehealth";
         String databaseUser = "admin";
         String databasePassword = "vgustudent";
         String url = "jdbc:mysql://ehealth-db.cqajckw84dii.us-east-1.rds.amazonaws.com:3306/" + databaseName;
 
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            databaseLink = DriverManager.getConnection(url,databaseUser,databasePassword);
-            System.out.println("DB Connected");
-        }catch (Exception e){
+        try {
+            loadJDBCDriver();
+            dbConnection = DriverManager.getConnection(url, databaseUser, databasePassword);
+            System.out.println("Database Connected!");
+        } catch (Exception e) {
             e.printStackTrace();
             e.getCause();
-            System.out.println("Sai cmnr");
+            System.out.println("Connection Failed!");
         }
-        return databaseLink;
+        //return databaseConnection;
+    }// end getConnection()
+
+    static public void loadJDBCDriver() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("JDBC Driver loaded!");
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException("Cannot find the driver in the classpath!", e);
+        }
     }
 
 }
+

@@ -34,7 +34,7 @@
                   <PasswordField fx:id="field_password1" layoutX="13.0" layoutY="175.0" prefHeight="26.0" prefWidth="173.0" />
                   <Label layoutX="14.0" layoutY="209.0" text="Enter Email Address" />
                   <TextField fx:id="tf_email_address" layoutX="12.0" layoutY="227.0" prefHeight="26.0" prefWidth="173.0" promptText="Your email address" />
-                  <Label fx:id="label_registermessage" layoutX="27.0" layoutY="268.0" textFill="RED">
+                  <Label fx:id="label_registermessage" layoutX="8.0" layoutY="260.0" prefHeight="31.0" prefWidth="182.0" textAlignment="CENTER" textFill="RED">
                      <font>
                         <Font size="10.0" />
                      </font>
