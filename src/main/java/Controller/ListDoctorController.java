@@ -1,11 +1,11 @@
 package Controller;
 
-import javafx.beans.property.Property;
+import Connection.DBControl;
+import Models.Doctor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import Models.Doctor;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -21,8 +21,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
@@ -64,7 +62,7 @@ public class ListDoctorController implements Initializable {
 
 
         try{
-            Statement statement = ConnectDB.createStatement();
+            Statement statement = DBControl.dbConnection.createStatement();
             ResultSet queryOutput = statement.executeQuery(doctorViewQuery);
 
             while(queryOutput.next()){
@@ -90,7 +88,7 @@ public class ListDoctorController implements Initializable {
         }
     }
 
-    public void backButtonOnActionPerformed(ActionEvent event) throws Exception  {
+    public void cancelButtonOnAction(ActionEvent event) throws Exception  {
         //        After click, return to the after login stage
         Parent root = FXMLLoader.load(getClass().getResource("book_appointment.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

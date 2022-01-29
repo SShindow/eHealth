@@ -1,5 +1,4 @@
 package Controller;
-
 import Connection.DBControl;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -10,14 +9,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.stage.StageStyle;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -27,38 +22,27 @@ import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-
-public class LoginController implements Initializable {
-
-    @FXML
-    private Button button_adminLogin;
-    @FXML
-    private Button button_login;
-    @FXML
-    private Button button_register;
-    @FXML
-    private Button button_cancel;
-    @FXML
-    private Button button_forgotPassword;
-
-    @FXML
-    private Label label_loginmessage;
-
-    @FXML
-    private TextField tf_username;
-
-    @FXML
-    private PasswordField field_password;
+public class AdminLoginController implements Initializable {
 
     @FXML
     private ImageView image_background;
+    @FXML
+    TextField tf_adminUsername;
+    @FXML
+    TextField tf_adminPassword;
+    @FXML
+    private Label label_loginmessage;
+    @FXML
+    Button tf_adminLogin;
+    @FXML
+    Button tf_adminCancel;
 
-    //Used for After-Login (e.g: EditProfile) page(s)
-    public static String loggedInUsername = "";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,40 +51,26 @@ public class LoginController implements Initializable {
         image_background.setImage(backgroundImage);
     }
 
-    public void loginButtonOnAction(ActionEvent event) throws IOException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
-//       if the username is not blank, go to the log in function to confirm account exist
-        if (tf_username.getText().isBlank() == false && field_password.getText().isBlank() == false && validateLogin()) {
-;
+    @FXML
+    public void loginButtonOnAction(Event event) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+        if (tf_adminUsername.getText().isBlank() == false && tf_adminPassword.getText().isBlank() == false && validateLogin()) {
+
+            label_loginmessage.setText("Welcome admin!");
             //Switch to log in scene
-            Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+//            Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
+//            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+//            stage.show();
         } else {
             label_loginmessage.setText("Invalid credentials! Please try again.");
         }
     }
 
-    public void cancelButtonOnAction(ActionEvent event) {
-//        Close the application
-        Stage stage = (Stage) button_cancel.getScene().getWindow();
-        stage.close();
-    }
-
-    public void registerButtonOnAction(ActionEvent event) throws Exception {
-//        Switch to register stage
-        Parent root = FXMLLoader.load(getClass().getResource("register.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
     @FXML
-    public void forgotPasswordButtonOnAction(ActionEvent event) throws IOException {
+    public void cancelButtonOnAction(Event event) throws IOException {
         //Switch to log in scene
-        Parent root = FXMLLoader.load(getClass().getResource("forgot_password.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -110,11 +80,11 @@ public class LoginController implements Initializable {
     public boolean validateLogin() throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException, IOException {
 
         // Get Input from user
-        String username = tf_username.getText();
-        String password = field_password.getText();
+        String username = tf_adminUsername.getText();
+        String password = tf_adminPassword.getText();
 
         // Get salt and calculate hashedPassword to compare in Database. If match Login is successful.
-        byte[] salt = getSaltFromDBUsername(username);
+        byte[] salt = getSaltFromDBUsernameAdmin(username);
         byte[] hashedPassword;
         if(salt.length == 0)
         {
@@ -122,13 +92,13 @@ public class LoginController implements Initializable {
             return false;
         }
         else
-        hashedPassword = generateHashedPassword(password, salt);
+            hashedPassword = generateHashedPassword(password, salt);
 
 
-        if (isHashedPasswordCorrect(username, hashedPassword) == true) {
+        if (isHashedPasswordCorrectAdmin(username, hashedPassword) == true) {
             label_loginmessage.setText("Login Successfully!");
-            loggedInUsername = username;
-        return true;
+            //loggedInUsername = username;
+            return true;
         } else {
             System.out.println("Wrong password");
             label_loginmessage.setText("Invalid credentials! Please try again.");
@@ -136,20 +106,9 @@ public class LoginController implements Initializable {
         }
     }
 
-    @FXML
-    public void adminLoginButtonOnAction(ActionEvent event) throws IOException
-    {
-        //Switch to admin log in scene
-        Parent root = FXMLLoader.load(getClass().getResource("admin_login.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    byte[] getSaltFromDBUsername(String DBUsername) throws SQLException {
+    byte[] getSaltFromDBUsernameAdmin(String DBUsername) throws SQLException {
         //Connection connection = getConnection();
-        String query = "SELECT salt FROM user WHERE username= ?";
+        String query = "SELECT adminSalt FROM admin WHERE adminUsername= ?";
         PreparedStatement pst = DBControl.dbConnection.prepareStatement(query);
         pst.setString(1, DBUsername);
         ResultSet rs = pst.executeQuery();
@@ -169,9 +128,9 @@ public class LoginController implements Initializable {
         return hashedPassword;
     }
 
-    boolean isHashedPasswordCorrect(String DBUsername, byte[] hashedPassword) throws SQLException {
+    boolean isHashedPasswordCorrectAdmin(String DBUsername, byte[] hashedPassword) throws SQLException {
         //Connection connection = getConnection();
-        String query = "SELECT hashedPassword FROM user WHERE username= ?";
+        String query = "SELECT adminHashedPassword FROM admin WHERE adminUsername= ?";
         PreparedStatement pst = DBControl.dbConnection.prepareStatement(query);
         pst.setString(1, DBUsername);
         ResultSet rs = pst.executeQuery();
@@ -179,5 +138,4 @@ public class LoginController implements Initializable {
         byte[] importedHashedPassword = rs.getBytes(1);
         return Arrays.equals(hashedPassword, importedHashedPassword);
     }
-
 }

@@ -11,6 +11,7 @@ module com.example.test {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires java.mail;
 
     opens Controller to javafx.fxml;
     exports Controller;
@@ -18,4 +19,7 @@ module com.example.test {
     opens Connection to javafx.fxml;
     exports Main;
     opens Main to javafx.fxml;
+
+    opens Models to javafx.base;
+
 }
