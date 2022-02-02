@@ -19,7 +19,7 @@ public class Main extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("Welcome!");
         primaryStage.show();
-
+        System.out.println("Hello");
         //Connect To Database:
         DBControl.connectToDatabase();
 
