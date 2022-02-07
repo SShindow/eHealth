@@ -23,6 +23,10 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * Controller of book_appointment.fxml, user select department, write short description, then select desired distance to search
+ * @Author Hai Cao Xuan, Hoang Dinh Minh
+ */
 public class BookAppointmentController implements Initializable {
 
     @FXML
@@ -55,6 +59,11 @@ public class BookAppointmentController implements Initializable {
     @FXML
     private Tooltip tooltip_help;
 
+    /**
+     * Method to implement imag, choice box, and spinner
+     * @param url of images and other elements
+     * @param resourceBundle used to store texts and components that are locale sensitive
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        Make image displayable
@@ -80,6 +89,10 @@ public class BookAppointmentController implements Initializable {
 
     }
 
+    /**
+     * Method to load symptom categories from database for use
+     * @throws SQLException that provides information on a database access error or other errors
+     */
     public void loadSymptomsDataFromDB() throws SQLException {
         Statement stm = DBControl.dbConnection.createStatement();
         ResultSet rs = stm.executeQuery("SELECT * FROM healthdept");
@@ -89,6 +102,12 @@ public class BookAppointmentController implements Initializable {
         }
     }
 
+
+    /**
+     * Method to search for list of doctor based on user search
+     * @param event when clicking search button
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     */
     @FXML
     public void searchButtonOnAction(ActionEvent event) throws IOException {
         String chosenHealthCategory = choice_symptoms.getValue();
@@ -103,6 +122,11 @@ public class BookAppointmentController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method to return to after login page on click
+     * @param event when clicking back cancel button
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     */
     @FXML
     public void cancelButtonOnAction(ActionEvent event) throws IOException {
 //        After click, return to the after login stage
@@ -113,6 +137,9 @@ public class BookAppointmentController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method to use function helpTooltipOnShow
+     */
     @FXML
     public void helpTooltipOnShow()
     {
@@ -127,6 +154,9 @@ public class BookAppointmentController implements Initializable {
 //        helpTextShowSymptomDescription();
 //    }
 
+    /**
+     * Method to display tooltip help of the symptoms
+     */
     public void helpTextShowSymptomDescription() {
         String selectedSymptom = choice_symptoms.getValue();
         if (selectedSymptom == null)
@@ -136,6 +166,10 @@ public class BookAppointmentController implements Initializable {
         tooltip_help.setText(selectedSymptomDescription);
     }
 
+    /**
+     * Method for delay before execute action
+     * @param ms is the variable of millisecond
+     */
     public static void wait(int ms) {
         try {
             Thread.sleep(ms);

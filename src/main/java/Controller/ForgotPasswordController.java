@@ -27,6 +27,11 @@ import java.sql.SQLException;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+
+/**
+ * Controller class of forgot_password.fxml, to recover password by entering recovery code
+ * @Author Hoang Dinh Minh
+ */
 public class ForgotPasswordController implements Initializable {
 
     @FXML
@@ -52,6 +57,11 @@ public class ForgotPasswordController implements Initializable {
     static String recoverEmail;
 
 
+    /**
+     * Method which makes the background image displayable
+     * @param url indicates url image
+     * @param resourceBundle used to store texts and components that are locale sensitive
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         File backgroundFile = new File("stuff/background.jpg");
@@ -61,6 +71,12 @@ public class ForgotPasswordController implements Initializable {
         tf_recoverCode.setEditable(false);
     }
 
+    /**
+     * Method to recover password by sending recovery code to email
+     * @throws MessagingException specifies Exception and detail message
+     * @throws SQLException that provides information on a database access error or other errors
+     * @throws InterruptedException when a thread is waiting, sleeping, or otherwise occupied
+     */
     @FXML
     public void recoverSendEmailButtonOnAction() throws MessagingException, SQLException, InterruptedException {
         tf_recoverMessage.setText("Sending Email...");
@@ -113,6 +129,11 @@ public class ForgotPasswordController implements Initializable {
 
     }
 
+    /**
+     * Method to return to login page on click
+     * @param event when clicking cancel button
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     */
     @FXML
     public void cancelButtonOnAction (ActionEvent event) throws IOException
     {
@@ -124,6 +145,13 @@ public class ForgotPasswordController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method to confirm the recovery code then switch to the reset password scene
+     * @param event when clicking confirm
+     * @throws InterruptedException when a thread is waiting, sleeping, or otherwise occupied
+     * @throws SQLException that provides information on a database access error or other errors
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     */
     @FXML
     public void confirmButtonOnAction(ActionEvent event) throws InterruptedException, SQLException, IOException {
         if(emailSent == false)

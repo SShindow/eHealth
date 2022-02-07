@@ -1,3 +1,8 @@
+/**
+ * This class provides model for a doctor
+ * @Author Hai Cao Xuan
+ */
+
 package Models;
 
 import java.util.UUID;
@@ -11,6 +16,13 @@ public class Doctor {
     double clinicLongitude;
     double clinicLatitude;
 
+    /**
+     * Constructor for fetching doctor from database
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param clinicName
+     */
     public Doctor(String firstName, String lastName, String address, String clinicName) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -18,6 +30,16 @@ public class Doctor {
         this.clinicName = clinicName;
     }
 
+    /**
+     * Constructor to create a doctor
+     * @Author Hai Cao Xuan
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param clinicName
+     * @param clinicLongitude
+     * @param clinicLatitude
+     */
     public Doctor(String firstName, String lastName, String address, String clinicName, double clinicLongitude, double clinicLatitude)
     {
         this.firstName = firstName;
@@ -27,6 +49,18 @@ public class Doctor {
         this.clinicLongitude = clinicLongitude;
         this.clinicLatitude = clinicLatitude;
     }
+
+    /**
+     * Constructor for creating a doctor with the ID
+     * @Author Hoang Dinh Minh
+     * @param doctorID
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param clinicName
+     * @param clinicLongitude
+     * @param clinicLatitude
+     */
     public Doctor(UUID doctorID, String firstName, String lastName, String address, String clinicName, double clinicLongitude, double clinicLatitude)
     {
         this.doctorID = doctorID;

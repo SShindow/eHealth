@@ -29,6 +29,10 @@ import java.sql.*;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
+/**
+ * Controller class of admin_edit.fxml, after logging in successfully, admin can view list of user and doctor information
+ * @Author Hoang Dinh Minh
+ */
 public class AdminEditController implements Initializable {
     @FXML
     ImageView image_background;
@@ -84,6 +88,11 @@ public class AdminEditController implements Initializable {
     ObservableList<User> userObserverableList = FXCollections.observableArrayList();
     ObservableList<Doctor> doctorObservableList = FXCollections.observableArrayList();
 
+    /**
+     * Method to implement images and other elements
+     * @param url of images
+     * @param resourceBundle used to store texts and components that are locale sensitive
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         File backgroundFile = new File("stuff/background.jpg");

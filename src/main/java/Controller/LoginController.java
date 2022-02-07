@@ -31,7 +31,10 @@ import java.sql.*;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-
+/**
+ * Controller class connected to login.fxml to log in for an existing account
+ * @Author Hai Cao Xuan, Hoang Dinh Minh
+ */
 public class LoginController implements Initializable {
 
     @FXML
@@ -57,9 +60,18 @@ public class LoginController implements Initializable {
     @FXML
     private ImageView image_background;
 
+    /**
+     * Default set for logged in username
+     */
     //Used for After-Login (e.g: EditProfile) page(s)
     public static String loggedInUsername = "";
 
+    /**
+     * Method which makes the background image displayable
+     * @Author Hai Cao Xuan
+     * @param url indicates url image
+     * @param resourceBundle used to store texts and components that are locale sensitive
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         File backgroundFile = new File("stuff/background.jpg");
@@ -67,6 +79,15 @@ public class LoginController implements Initializable {
         image_background.setImage(backgroundImage);
     }
 
+    /**
+     * Method that assigns to the login button in fxml file
+     * @Author Hai Cao Xuan
+     * @param event when clicking login button
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     * @throws SQLException that provides information on a database access error or other errors
+     * @throws NoSuchAlgorithmException detect other underlying exceptions
+     * @throws InvalidKeySpecException when an invalid key specification is encountered
+     */
     public void loginButtonOnAction(ActionEvent event) throws IOException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
 //       if the username is not blank, go to the log in function to confirm account exist
         if (tf_username.getText().isBlank() == false && field_password.getText().isBlank() == false && validateLogin()) {
@@ -82,12 +103,23 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * Method that close the application on click
+     * @Author Hai Cao Xuan
+     * @param event when clicking the close button
+     */
     public void cancelButtonOnAction(ActionEvent event) {
 //        Close the application
         Stage stage = (Stage) button_cancel.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Method that switch to register scene on click
+     * @Author Hai Cao Xuan
+     * @param event when clicking register text
+     * @throws Exception when encounter some unexpected error
+     */
     public void registerButtonOnAction(ActionEvent event) throws Exception {
 //        Switch to register stage
         Parent root = FXMLLoader.load(getClass().getResource("register.fxml"));
@@ -97,6 +129,12 @@ public class LoginController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method that switch to recover password scene on click
+     * @Author Hoang Dinh Minh
+     * @param event after clicking forgot password
+     * @throws IOException when encouter an I/O exception to some sort has occurred
+     */
     @FXML
     public void forgotPasswordButtonOnAction(ActionEvent event) throws IOException {
         //Switch to log in scene
@@ -107,6 +145,15 @@ public class LoginController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method to validate for login to the application
+     * @Author Hoang Dinh Minh
+     * @return boolean value
+     * @throws SQLException that provides information on a database access error or other errors
+     * @throws NoSuchAlgorithmException detect other underlying exceptions
+     * @throws InvalidKeySpecException when an invalid key specification is encountered
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     */
     public boolean validateLogin() throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException, IOException {
 
         // Get Input from user
@@ -136,6 +183,12 @@ public class LoginController implements Initializable {
         }
     }
 
+
+    /**
+     * Method to switch to admin login scene on click
+      * @param event when clicking admin login text
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     */
     @FXML
     public void adminLoginButtonOnAction(ActionEvent event) throws IOException
     {

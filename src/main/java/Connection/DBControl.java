@@ -11,11 +11,21 @@ import javafx.stage.Stage;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * A class to establish connection to database
+ * @Author Hai Cao Xuan
+ */
 public class DBControl {
 
-
+    /**
+     * Set parameter for connection
+     */
     static public Connection dbConnection;
 
+    /**
+     * Method to set a connection to database
+     * @Author Hai Cao Xuan
+     */
     static public void connectToDatabase() {
         String databaseName = "ehealth";
         String databaseUser = "admin";
@@ -34,6 +44,10 @@ public class DBControl {
         //return databaseConnection;
     }// end getConnection()
 
+    /**
+     * Method to load JDBC Driver
+     * @Author Hoang Dinh Minh
+     */
     static public void loadJDBCDriver() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

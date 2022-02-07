@@ -18,6 +18,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+
+/**
+ * Controller class of admin_edit_doctor_popup.fxml, to modify doctor profile
+ * @Author Hoang Dinh Minh
+ */
 public class AdminEditDoctorPopupController implements Initializable {
 
     @FXML
@@ -52,6 +57,12 @@ public class AdminEditDoctorPopupController implements Initializable {
     String invalidColorCSS = "-fx-control-inner-background: red;";
     String validColorCSS = "-fx-control-inner-background: white;";
 
+
+    /**
+     * Method to implement images and doctor's location
+     * @param url of images
+     * @param resourceBundle used to store texts and components that are locale sensitive
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         File backgroundFile = new File("stuff/background.jpg");
@@ -145,6 +156,10 @@ public class AdminEditDoctorPopupController implements Initializable {
         statement.executeUpdate();
     }
 
+    /**
+     * Method to initialize doctor data
+     * @param doctor of the application
+     */
     public void initDoctorData(Doctor doctor) {
         DoctorToEdit = doctor;
 

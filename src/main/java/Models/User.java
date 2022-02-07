@@ -4,6 +4,10 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 
+/**
+ * This class provides model for a user
+ * @Author Hoang Dinh Minh
+ */
 
 public class User {
     public static enum InsuranceType {
@@ -29,7 +33,19 @@ public class User {
     String gender;
     java.sql.Date dateOfBirth;
 
-    //Constructor for Admin View
+    /**
+     * Constructor for Admin View
+     * @Author Hoang Dinh Minh
+     * @param username
+     * @param email
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param insuranceID
+     * @param insuranceType
+     * @param gender
+     * @param dateOfBirth
+     */
     public User (String username, String email, String firstName, String lastName, String address, String insuranceID, String insuranceType, String gender, java.sql.Date dateOfBirth)
     {
         this.username = username;

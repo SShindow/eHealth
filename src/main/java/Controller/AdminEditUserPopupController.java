@@ -22,6 +22,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class of admin_edit_user_popup.fxml, where admin can edit user profile
+ * @Author Hoang Dinh Minh
+ */
 public class AdminEditUserPopupController implements Initializable {
 
     @FXML
@@ -64,6 +68,11 @@ public class AdminEditUserPopupController implements Initializable {
 
     private User UserToEdit;
 
+    /**
+     * Method to implement images and choice boxes
+     * @param url of images
+     * @param resourceBundle used to store texts and components that are locale sensitive
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         File backgroundFile = new File("stuff/background.jpg");
@@ -142,6 +151,11 @@ public class AdminEditUserPopupController implements Initializable {
         statement.executeUpdate();
     }
 
+
+    /**
+     * Method to initialize user data
+     * @param user of the application
+     */
     public void initUserData(User user) {
         UserToEdit = user;
 

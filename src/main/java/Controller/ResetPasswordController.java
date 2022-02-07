@@ -29,7 +29,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-
+/**
+ * Controller class of reset_password.fxml to reset for a new password
+ * @Author Hoang Dinh Minh
+ */
 public class ResetPasswordController implements Initializable {
     @FXML
     ImageView image_background;
@@ -46,6 +49,11 @@ public class ResetPasswordController implements Initializable {
     @FXML
     Button tf_confirmButton;
 
+    /**
+     * Method which makes the background image displayable
+     * @param url indicates url image
+     * @param resourceBundle used to store texts and components that are locale sensitive
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         File backgroundFile = new File("stuff/background.jpg");

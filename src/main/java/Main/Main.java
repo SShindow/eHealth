@@ -10,13 +10,20 @@ import javafx.stage.StageStyle;
 
 import java.sql.Connection;
 
+/**
+ * Main class to run the whole application
+ * @author Hai Cao Xuan
+ */
 public class Main extends Application {
-
+    /**
+     * Start method to run application, starting from file login.fxml
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         //Connect To Database:
         DBControl.connectToDatabase();
-
         Parent root = FXMLLoader.load(getClass().getResource("/Controller/login.fxml"));
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.initStyle(StageStyle.UNDECORATED);

@@ -27,6 +27,10 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Controller class of list_doctor.fxml, to display a moderate amount of doctor based on patent's need
+ * @Author Hai Cao Xuan, Hoang Dinh Minh
+ */
 public class ListDoctorController implements Initializable {
 
     @FXML
@@ -51,6 +55,11 @@ public class ListDoctorController implements Initializable {
 
     ObservableList<Doctor> doctorSearchModelObserverableList = FXCollections.observableArrayList();
 
+    /**
+     * Method which makes the background image displayable, also initialize the table to display list of doctor
+     * @param url indicates url of image and other elements
+     * @param resourceBundle used to store texts and components that are locale sensitive
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        Make image displayable
@@ -88,6 +97,11 @@ public class ListDoctorController implements Initializable {
         }
     }
 
+    /**
+     * Method to return to after login page on click
+     * @param event when clicking back button
+     * @throws Exception in case of encountering unexpected exception
+     */
     public void cancelButtonOnAction(ActionEvent event) throws Exception  {
         //        After click, return to the after login stage
         Parent root = FXMLLoader.load(getClass().getResource("book_appointment.fxml"));

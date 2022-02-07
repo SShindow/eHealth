@@ -29,6 +29,10 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class of admin_login.fxml, for admin to log in to the application
+ * @Author Hoang Dinh Minh
+ */
 public class AdminLoginController implements Initializable {
 
     @FXML
@@ -45,6 +49,11 @@ public class AdminLoginController implements Initializable {
     Button tf_adminCancel;
 
 
+    /**
+     * Method to initialize images and other elemtents
+     * @param url of the images and other elements
+     * @param resourceBundle used to store texts and components that are locale sensitive
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         File backgroundFile = new File("stuff/background.jpg");
@@ -52,6 +61,15 @@ public class AdminLoginController implements Initializable {
         image_background.setImage(backgroundImage);
     }
 
+
+    /**
+     * Method to login to the admin platform in order to edit or delete user/doctor information
+     * @param event when clicking log in button
+     * @throws SQLException that provides information on a database access error or other errors
+     * @throws NoSuchAlgorithmException detect other underlying exceptions
+     * @throws InvalidKeySpecException when an invalid key specification is encountered
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     */
     @FXML
     public void loginButtonOnAction(ActionEvent event) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException, IOException {
         if (tf_adminUsername.getText().isBlank() == false && tf_adminPassword.getText().isBlank() == false && validateLogin()) {
@@ -68,6 +86,11 @@ public class AdminLoginController implements Initializable {
         }
     }
 
+    /**
+     * Method to return to login scene on click
+     * @param event when clicking on cancel button
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     */
     @FXML
     public void cancelButtonOnAction(Event event) throws IOException {
         //Switch to log in scene
@@ -78,6 +101,14 @@ public class AdminLoginController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method to validate for login to the application
+     * @return boolean value
+     * @throws SQLException that provides information on a database access error or other errors
+     * @throws NoSuchAlgorithmException detect other underlying exceptions
+     * @throws InvalidKeySpecException when an invalid key specification is encountered
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     */
     public boolean validateLogin() throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException, IOException {
 
         // Get Input from user
