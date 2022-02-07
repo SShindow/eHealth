@@ -107,7 +107,7 @@ public class Location {
 
         var result = R * c;
         return result;
-    }//Return the value(Double) after given two different latitude and longitude
+    }
 
     /**
      * Calculate distance
