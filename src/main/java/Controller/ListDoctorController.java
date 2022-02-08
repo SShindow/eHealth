@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 
 /**
  * Controller class of list_doctor.fxml, to display a moderate amount of doctor based on patent's need
- * @Author Hai Cao Xuan, Hoang Dinh Minh
+ * @author  Hai Cao Xuan, Hoang Dinh Minh
  */
 public class ListDoctorController implements Initializable {
 

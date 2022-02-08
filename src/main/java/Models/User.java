@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 /**
  * This class provides model for a user
- * @Author Hoang Dinh Minh
+ * @author  Hoang Dinh Minh
  */
 
 public class User {
@@ -35,7 +35,7 @@ public class User {
 
     /**
      * Constructor for Admin View
-     * @Author Hoang Dinh Minh
+     * @author Hoang Dinh Minh
      * @param username
      * @param email
      * @param firstName

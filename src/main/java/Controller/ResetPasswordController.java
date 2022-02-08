@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controller class of reset_password.fxml to reset for a new password
- * @Author Hoang Dinh Minh
+ * @author Hoang Dinh Minh
  */
 public class ResetPasswordController implements Initializable {
     @FXML

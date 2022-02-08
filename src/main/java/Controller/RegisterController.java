@@ -34,7 +34,7 @@ import java.util.UUID;
 
 /**
  * Controller class of register.fxml file to register for a new account
- * @Author Hai Cao Xuan, Hoang Dinh Minh
+ * @author Hai Cao Xuan, Hoang Dinh Minh
  */
 public class RegisterController implements Initializable {
 
@@ -62,7 +62,7 @@ public class RegisterController implements Initializable {
 
     /**
      * Method which makes the background image displayable
-     * @Author Hai Cao Xuan
+     * @author Hai Cao Xuan
      * @param url indicates url image
      * @param resourceBundle used to store texts and components that are locale sensitive
      */
@@ -75,7 +75,7 @@ public class RegisterController implements Initializable {
 
     /**
      * Method that switch to login scene on click
-     * @Author Hai Cao Xuan
+     * @author Hai Cao Xuan
      * @param event when clicking login text
      * @throws IOException when encounter an I/O exception to some sort has occurred
      */

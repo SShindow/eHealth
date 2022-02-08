@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controller class of forgot_password.fxml, to recover password by entering recovery code
- * @Author Hoang Dinh Minh
+ * @author Hoang Dinh Minh
  */
 public class ForgotPasswordController implements Initializable {
 

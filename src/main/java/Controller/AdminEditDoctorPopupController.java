@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controller class of admin_edit_doctor_popup.fxml, to modify doctor profile
- * @Author Hoang Dinh Minh
+ * @author Hoang Dinh Minh
  */
 public class AdminEditDoctorPopupController implements Initializable {
 

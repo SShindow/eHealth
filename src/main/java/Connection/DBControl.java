@@ -13,7 +13,7 @@ import java.sql.DriverManager;
 
 /**
  * A class to establish connection to database
- * @Author Hai Cao Xuan
+ * @author Hai Cao Xuan
  */
 public class DBControl {
 
@@ -24,7 +24,7 @@ public class DBControl {
 
     /**
      * Method to set a connection to database
-     * @Author Hai Cao Xuan
+     * @author Hai Cao Xuan
      */
     static public void connectToDatabase() {
         String databaseName = "ehealth";
@@ -46,7 +46,7 @@ public class DBControl {
 
     /**
      * Method to load JDBC Driver
-     * @Author Hoang Dinh Minh
+     * @author Hoang Dinh Minh
      */
     static public void loadJDBCDriver() {
         try {

@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controller class of admin_login.fxml, for admin to log in to the application
- * @Author Hoang Dinh Minh
+ * @author Hoang Dinh Minh
  */
 public class AdminLoginController implements Initializable {
 

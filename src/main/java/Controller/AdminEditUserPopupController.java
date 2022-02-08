@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controller class of admin_edit_user_popup.fxml, where admin can edit user profile
- * @Author Hoang Dinh Minh
+ * @author Hoang Dinh Minh
  */
 public class AdminEditUserPopupController implements Initializable {
 

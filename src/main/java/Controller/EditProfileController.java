@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controller for edit_profile.fxml, use to modify personal information then update to database
- * @Author Hai Cao Xuan, Hoang Dinh Minh
+ * @author Hai Cao Xuan, Hoang Dinh Minh
  */
 public class EditProfileController implements Initializable {
 

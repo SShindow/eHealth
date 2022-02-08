@@ -31,7 +31,7 @@ import java.util.UUID;
 
 /**
  * Controller class of admin_edit.fxml, after logging in successfully, admin can view list of user and doctor information
- * @Author Hoang Dinh Minh
+ * @author Hoang Dinh Minh
  */
 public class AdminEditController implements Initializable {
     @FXML
@@ -215,6 +215,12 @@ public class AdminEditController implements Initializable {
         doctorTableView.setItems(doctorObservableList);
     }
 
+    /**
+     * Method to interact with table row on double click
+     * @param event when double-clicking on a row
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     * @throws SQLException that provides information on a database access error or other errors
+     */
     @FXML
     public void adminUserTableViewOnMouseClicked(MouseEvent event) throws IOException, SQLException {
         if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
@@ -231,6 +237,12 @@ public class AdminEditController implements Initializable {
         }
     }
 
+    /**
+     * Method to interact with doctor row on double click
+     * @param event when double click on a row
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     * @throws SQLException that provides information on a database access error or other errors
+     */
     @FXML
     public void adminDoctorTableViewOnMouseClicked(MouseEvent event) throws IOException, SQLException {
         if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){

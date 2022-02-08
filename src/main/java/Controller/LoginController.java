@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controller class connected to login.fxml to log in for an existing account
- * @Author Hai Cao Xuan, Hoang Dinh Minh
+ * @author  Hai Cao Xuan, Hoang Dinh Minh
  */
 public class LoginController implements Initializable {
 
@@ -68,7 +68,7 @@ public class LoginController implements Initializable {
 
     /**
      * Method which makes the background image displayable
-     * @Author Hai Cao Xuan
+     * @author Hai Cao Xuan
      * @param url indicates url image
      * @param resourceBundle used to store texts and components that are locale sensitive
      */
@@ -81,7 +81,7 @@ public class LoginController implements Initializable {
 
     /**
      * Method that assigns to the login button in fxml file
-     * @Author Hai Cao Xuan
+     * @author Hai Cao Xuan
      * @param event when clicking login button
      * @throws IOException when encounter an I/O exception to some sort has occurred
      * @throws SQLException that provides information on a database access error or other errors
@@ -105,7 +105,7 @@ public class LoginController implements Initializable {
 
     /**
      * Method that close the application on click
-     * @Author Hai Cao Xuan
+     * @author Hai Cao Xuan
      * @param event when clicking the close button
      */
     public void cancelButtonOnAction(ActionEvent event) {
@@ -116,7 +116,7 @@ public class LoginController implements Initializable {
 
     /**
      * Method that switch to register scene on click
-     * @Author Hai Cao Xuan
+     * @author Hai Cao Xuan
      * @param event when clicking register text
      * @throws Exception when encounter some unexpected error
      */
@@ -131,7 +131,7 @@ public class LoginController implements Initializable {
 
     /**
      * Method that switch to recover password scene on click
-     * @Author Hoang Dinh Minh
+     * @author Hoang Dinh Minh
      * @param event after clicking forgot password
      * @throws IOException when encouter an I/O exception to some sort has occurred
      */
@@ -147,7 +147,7 @@ public class LoginController implements Initializable {
 
     /**
      * Method to validate for login to the application
-     * @Author Hoang Dinh Minh
+     * @author Hoang Dinh Minh
      * @return boolean value
      * @throws SQLException that provides information on a database access error or other errors
      * @throws NoSuchAlgorithmException detect other underlying exceptions

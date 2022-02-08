@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controller class of after_login.fxml, display after logging in to the application successfully, providing various options
- * @Author Hai Cao Xuan
+ * @author Hai Cao Xuan
  */
 public class AfterLoginController implements Initializable{
     @FXML

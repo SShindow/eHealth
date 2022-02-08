@@ -32,7 +32,7 @@ public class Doctor {
 
     /**
      * Constructor to create a doctor
-     * @Author Hai Cao Xuan
+     * @author Hai Cao Xuan
      * @param firstName
      * @param lastName
      * @param address
@@ -52,7 +52,7 @@ public class Doctor {
 
     /**
      * Constructor for creating a doctor with the ID
-     * @Author Hoang Dinh Minh
+     * @author Hoang Dinh Minh
      * @param doctorID
      * @param firstName
      * @param lastName

@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controller of book_appointment.fxml, user select department, write short description, then select desired distance to search
- * @Author Hai Cao Xuan, Hoang Dinh Minh
+ * @author Hai Cao Xuan, Hoang Dinh Minh
  */
 public class BookAppointmentController implements Initializable {
 
