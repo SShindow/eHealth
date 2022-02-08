@@ -227,7 +227,7 @@ public class ForgotPasswordController implements Initializable {
         return rs.getString(1);
     }
 
-    String generateRandomString(int stringLength) {
+    public static String generateRandomString(int stringLength) {
         Random rand = new Random();
         String result = "";
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

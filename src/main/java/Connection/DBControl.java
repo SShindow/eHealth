@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * A class to establish connection to database
@@ -55,6 +56,15 @@ public class DBControl {
         } catch (ClassNotFoundException e) {
             throw new IllegalStateException("Cannot find the driver in the classpath!", e);
         }
+    }
+    public static Connection connectToDatabaseWithReturnConnection() throws SQLException {
+        final String HOSTNAME = "ehealth-db.cqajckw84dii.us-east-1.rds.amazonaws.com";
+        final String PORT = "3306";
+        final String DBUSERNAME = "admin";
+        final String DBPASSWORD = "vgustudent";
+        final String DATABASENAME = "ehealth";
+        final String URL = "jdbc:mysql://" + HOSTNAME + ":" + PORT + "/ " + DATABASENAME;
+        return DriverManager.getConnection(URL, DBUSERNAME, DBPASSWORD);
     }
 
 }

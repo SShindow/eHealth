@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ListDoctorController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -32,13 +31,13 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <TableView fx:id="table_doctors" layoutX="28.0" layoutY="69.0" prefHeight="225.0" prefWidth="447.0">
+                  <TableView fx:id="table_doctors" layoutX="28.0" layoutY="69.0" onMouseClicked="#adminDoctorTableViewOnMouseClicked" prefHeight="225.0" prefWidth="447.0">
                     <columns>
+                        <TableColumn fx:id="col_id" editable="false" prefWidth="61.5" sortable="false" text="doctorID" visible="false" />
                       <TableColumn fx:id="col_firstname" prefWidth="72.800048828125" text="First Name" />
                       <TableColumn fx:id="col_lastname" prefWidth="77.59991455078125" text="Last Name" />
                         <TableColumn fx:id="col_address" prefWidth="91.199951171875" text="Address" />
-                        <TableColumn fx:id="col_clinicname" prefWidth="166.4000244140625" text="Clinic Name" />
-                        <TableColumn fx:id="col_button" prefWidth="42.4000244140625" />
+                        <TableColumn fx:id="col_clinicname" prefWidth="147.5" text="Clinic Name" />
                     </columns>
                   </TableView>
                </children>

@@ -49,7 +49,15 @@ public class Doctor {
         this.clinicLongitude = clinicLongitude;
         this.clinicLatitude = clinicLatitude;
     }
+    public Doctor(UUID doctorID, String firstName, String lastName, String address, String clinicName)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.clinicName = clinicName;
+        this.doctorID=doctorID;
 
+    }
     /**
      * Constructor for creating a doctor with the ID
      * @author Hoang Dinh Minh
