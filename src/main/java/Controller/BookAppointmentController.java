@@ -59,6 +59,9 @@ public class BookAppointmentController implements Initializable {
     @FXML
     private Tooltip tooltip_help;
 
+    public static String moreHealthInfo;
+    public static String chosenHealthDept;
+
     /**
      * Method to implement imag, choice box, and spinner
      * @param url of images and other elements
@@ -113,6 +116,10 @@ public class BookAppointmentController implements Initializable {
         String chosenHealthCategory = choice_symptoms.getValue();
         String chosenAdditionalInfo = tf_additionalinfo.getText();
         Integer chosenDistance = spinner_distance.getValue();
+
+        //Use to access when book appointment
+        moreHealthInfo = tf_additionalinfo.getText();
+        chosenHealthDept = choice_symptoms.getValue();
 
         //Switch to list_doctor scene
         Parent root = FXMLLoader.load(getClass().getResource("list_doctor.fxml"));

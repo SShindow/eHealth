@@ -26,7 +26,7 @@
     <show-object-properties value="false" />
     <loaded-nodes>
       <connection connection-id="accc1214-b4ce-4e5f-8589-100ce71c3809">
-        <schema name="ehealth" object-types="table, view, constraint, index, column, dataset trigger" />
+        <schema name="ehealth" object-types="table, view" />
       </connection>
     </loaded-nodes>
   </component>
