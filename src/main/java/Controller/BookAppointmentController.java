@@ -98,7 +98,7 @@ public class BookAppointmentController implements Initializable {
         spinner_distance.setValueFactory(valueFactory);
 
         //For Hoang Dinh Minh's uses only!!
-        valueFactory.setValue(setDefaultDistance);
+        //valueFactory.setValue(setDefaultDistance);
 
     }
 

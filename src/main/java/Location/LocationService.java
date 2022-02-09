@@ -4,19 +4,21 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
+import Connection.DBControl;
 
 /**
  * @author Thong Le Thanh
  * This class base on health problems category, input desirable distance to find out doctorID and his/her distance to that doctor
  */
 public class LocationService {
-    private static final String HOSTNAME = "ehealth-db.cqajckw84dii.us-east-1.rds.amazonaws.com";
-    private static final String PORT = "3306";
-    private static final String DATABASENAME = "ehealth"; // Or Schema Name
 
-    private static final String URL = "jdbc:mysql://" + HOSTNAME + ":" + PORT + "/ " + DATABASENAME;
-    private static final String DBUSERNAME = "admin";
-    private static final String DBPASSWORD = "vgustudent";
+//    private static final String HOSTNAME = "ehealth-db.cqajckw84dii.us-east-1.rds.amazonaws.com";
+//    private static final String PORT = "3306";
+//    private static final String DATABASENAME = "ehealth"; // Or Schema Name
+//
+//    private static final String URL = "jdbc:mysql://" + HOSTNAME + ":" + PORT + "/ " + DATABASENAME;
+//    private static final String DBUSERNAME = "admin";
+//    private static final String DBPASSWORD = "vgustudent";
     private Hashtable<String, Location> locationStorage = new Hashtable<>();
     private Map<String, List<String>> healthDeptStorage = new HashMap<>();
 
@@ -36,9 +38,7 @@ public class LocationService {
      */
     public Hashtable<String, Location> getLocationOfDoctorFromDatabase() {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://" +
-                    HOSTNAME + ":" + PORT + "/ " + DATABASENAME, "admin", "vgustudent");
-            Statement statement = connection.createStatement();
+            Statement statement = DBControl.dbConnection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM ehealth.doctor\n");
             Location tempLocation = new Location();
 
@@ -60,8 +60,7 @@ public class LocationService {
      */
     public Map<String, List<String>> getHealthDeptOfDoctors() {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://" + HOSTNAME + ":" + PORT + "/ " + DATABASENAME, "admin", "vgustudent");
-            Statement statement = connection.createStatement();
+            Statement statement = DBControl.dbConnection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM ehealth.doctorhealthdept\n");
             while (resultSet.next()){
                 healthDeptStorage.computeIfAbsent(resultSet.getString("healthDeptName"), k -> new ArrayList<>())
