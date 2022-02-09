@@ -24,7 +24,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         //Connect To Database:
         DBControl.connectToDatabase();
-        Parent root = FXMLLoader.load(getClass().getResource("/Controller/admin_edit.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Controller/login.fxml"));
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("Welcome!");
