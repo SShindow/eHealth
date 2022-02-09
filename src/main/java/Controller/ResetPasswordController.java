@@ -75,6 +75,16 @@ public class ResetPasswordController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method to confirm User's newly created password, update User's new password to Database.
+     * @author Hoang Dinh Minh
+     * @param event
+     * @throws SQLException
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     * @throws InterruptedException
+     * @throws IOException
+     */
     @FXML
     void confirmButtonOnAction(ActionEvent event) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException, InterruptedException, IOException {
         if(tf_password.getLength() == 0 || tf_passwordAgain.getLength() == 0 )

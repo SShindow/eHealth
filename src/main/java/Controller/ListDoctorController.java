@@ -80,6 +80,13 @@ public class ListDoctorController implements Initializable {
             loadDoctorFromDB();
         }
     }
+
+
+    /**
+     * Method to load suitable doctors list to Table View for user to choose to book an appointment
+     * @author Hoang Dinh Minh
+     * @throws SQLException
+     */
     void loadDoctorFromDB() throws SQLException
     {
         doctorSearchModelObserverableList.clear();

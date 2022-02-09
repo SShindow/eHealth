@@ -117,7 +117,8 @@ public class BookAppointmentController implements Initializable {
 
 
     /**
-     * Method to search for list of doctor based on user search
+     * Method to search for list of doctor based on user search conditions
+     * @author Hoang Dinh Minh
      * @param event when clicking search button
      * @throws IOException when encounter an I/O exception to some sort has occurred
      */

@@ -186,6 +186,7 @@ public class LoginController implements Initializable {
 
     /**
      * Method to switch to admin login scene on click
+     * @author Hoang Dinh Minh
       * @param event when clicking admin login text
      * @throws IOException when encounter an I/O exception to some sort has occurred
      */
