@@ -6,6 +6,10 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
+/**
+ * @author Thong Le Thanh
+ *
+ */
 public class Location {
     private double latitude;
     private double longitude;
@@ -18,6 +22,10 @@ public class Location {
         this.longitude = longitude;
     }
 
+    /**
+     * Method is used to get user's longitude and latitude from requested API
+     * @param urlLink Api Address to get location.
+     */
     public void getLocation(String urlLink){
         URL url = null;
         ArrayList<String> content = new ArrayList<>();
@@ -47,23 +55,46 @@ public class Location {
         }
     }//
 
+    /**
+     * set user's Latitude
+     * @param latitude
+     */
     public void setLatitude(double latitude){
         this.latitude = latitude;
     } // set value(double) to latitude
 
+    /**
+     * set user's Longitude
+     * @param longitude
+     */
     public void setLongitude(double longitude){
         this.longitude = longitude;
     }
 
+    /**
+     * get user's Longitude
+     * @return
+     */
     public double getLongitude(){
         return this.longitude;
     }
 
+    /**
+     * get user's Latitude
+     * @return
+     */
     public double getLatitude(){
         return this.latitude;
     }
 
-    // Calculate distance between two location
+    /**
+     * Calculate distance between two location
+     * @param la1 user's latitude
+     * @param lo1 user's longitude
+     * @param la2 doctor's latitude
+     * @param lo2 doctor's longitude
+     * @return Calculated distance
+     */
     public double distanceBetween2Points(double la1, double lo1, double la2, double lo2) {
         double R = 6371;
         double dLat = (la2 - la1) * (Math.PI / 180);
@@ -76,6 +107,11 @@ public class Location {
         return R * c;
     }//Return the value(Double) after given two different latitude and longitude
 
+    /**
+     * Calculate distance
+     * @param destinationPoint doctor's location
+     * @return doctor longitude and latitude
+     */
     public double distanceBetween2Points(Location destinationPoint){
         double destination_longitude = destinationPoint.getLongitude();
         double destination_latitude = destinationPoint.getLatitude();

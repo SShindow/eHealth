@@ -1,6 +1,7 @@
 package Controller;
 
 import Connection.DBControl;
+import Location.LocationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.ResourceBundle;
 
 /**
@@ -116,10 +119,6 @@ public class BookAppointmentController implements Initializable {
         String chosenHealthCategory = choice_symptoms.getValue();
         String chosenAdditionalInfo = tf_additionalinfo.getText();
         Integer chosenDistance = spinner_distance.getValue();
-
-        //Use to access when book appointment
-        moreHealthInfo = tf_additionalinfo.getText();
-        chosenHealthDept = choice_symptoms.getValue();
 
         //Switch to list_doctor scene
         Parent root = FXMLLoader.load(getClass().getResource("list_doctor.fxml"));

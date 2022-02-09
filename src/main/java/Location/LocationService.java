@@ -5,6 +5,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
 
+/**
+ * @author Thong Le Thanh
+ * This class base on health problems category, input desirable distance to find out doctorID and his/her distance to that doctor
+ */
 public class LocationService {
     private static final String HOSTNAME = "ehealth-db.cqajckw84dii.us-east-1.rds.amazonaws.com";
     private static final String PORT = "3306";
@@ -26,6 +30,10 @@ public class LocationService {
         this.healthDeptStorage = healthDeptStorage;
     }
 
+    /**
+     * This method is used to get location of doctor through unique doctorID
+     * @return Location of Doctor
+     */
     public Hashtable<String, Location> getLocationOfDoctorFromDatabase() {
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://" +
@@ -46,6 +54,10 @@ public class LocationService {
         return this.locationStorage;
     }
 
+    /**
+     *This method is used to get doctorId from health problems
+     * @return From one health problem that connect to unique doctorID
+     */
     public Map<String, List<String>> getHealthDeptOfDoctors() {
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://" + HOSTNAME + ":" + PORT + "/ " + DATABASENAME, "admin", "vgustudent");
@@ -61,6 +73,12 @@ public class LocationService {
         return this.healthDeptStorage;
     }
 
+    /**
+     * This method get selected doctor from desirable distance and health problem
+     * @param health_problem Chosen health problems from category
+     * @param distance Desirable distance input
+     * @return Unique doctorID with calculated distance from user's location
+     */
     public Hashtable<String, Double> selectDoctorBasedOnDistanceAndHealthProblem(String health_problem, Integer distance){
         this.locationStorage = this.getLocationOfDoctorFromDatabase();
         this.healthDeptStorage = this.getHealthDeptOfDoctors();
