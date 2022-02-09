@@ -59,14 +59,17 @@ public class AdminEditUserPopupController implements Initializable {
     Button btn_cancel;
     @FXML
     Button btn_save;
+    @FXML
+    Button btn_delete;
 
     //Enums in User
     //User.Gender
     //User.InsuranceType
 
-    final String UserUpdateStatement = "UPDATE user SET firstName = ?, lastName = ?, address = ?, insuranceID = ?, insuranceType = ?, gender = ? ,dateOfBirth = ? WHERE username = ?";
-
     private User UserToEdit;
+    final String UserUpdateStatement = "UPDATE user SET firstName = ?, lastName = ?, address = ?, insuranceID = ?, insuranceType = ?, gender = ? ,dateOfBirth = ? WHERE username = ?";
+    final String UserDeleteStatement = "DELETE FROM user WHERE username = ?";
+
 
     /**
      * Method to implement images and choice boxes
@@ -129,6 +132,12 @@ public class AdminEditUserPopupController implements Initializable {
         Stage stage = (Stage) btn_save.getScene().getWindow();
         stage.close();
     }
+    @FXML
+    void btnDeleteOnAction() throws SQLException {
+        deleteUserData();
+        Stage stage = (Stage) btn_save.getScene().getWindow();
+        stage.close();
+    }
 
     private void updateUserData() throws SQLException {
         PreparedStatement statement = DBControl.dbConnection.prepareStatement(UserUpdateStatement);;
@@ -151,7 +160,11 @@ public class AdminEditUserPopupController implements Initializable {
         statement.executeUpdate();
     }
 
-
+    private void deleteUserData() throws SQLException {
+        PreparedStatement statement = DBControl.dbConnection.prepareStatement(UserDeleteStatement);
+        statement.setString(1, UserToEdit.getUsername());
+        statement.executeUpdate();
+    }
     /**
      * Method to initialize user data
      * @param user of the application
