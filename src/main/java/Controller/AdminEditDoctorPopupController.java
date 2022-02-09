@@ -45,6 +45,8 @@ public class AdminEditDoctorPopupController implements Initializable {
     Button btn_cancel;
     @FXML
     Button btn_save;
+    @FXML
+    Button btn_delete;
 
     @FXML
     private Label lbl_errorMessage;
@@ -54,6 +56,7 @@ public class AdminEditDoctorPopupController implements Initializable {
 
     private Doctor DoctorToEdit;
     final String UserUpdateStatement = "UPDATE doctor SET firstName = ?, lastName = ?, address = ?, clinicName = ?, doctorClinicLongitude = ?, doctorClinicLatitude = ? WHERE doctorID = ?";
+    final String DoctorDeleteStatement = "DELETE FROM doctor WHERE doctorID = ?";
     String invalidColorCSS = "-fx-control-inner-background: red;";
     String validColorCSS = "-fx-control-inner-background: white;";
 
@@ -138,6 +141,12 @@ public class AdminEditDoctorPopupController implements Initializable {
         Stage stage = (Stage) btn_save.getScene().getWindow();
         stage.close();
     }
+    @FXML
+    void btnDeleteOnAction() throws SQLException {
+        deleteDoctorData();
+        Stage stage = (Stage) btn_save.getScene().getWindow();
+        stage.close();
+    }
 
     private void updateDoctorData() throws SQLException {
         PreparedStatement statement = DBControl.dbConnection.prepareStatement(UserUpdateStatement);
@@ -153,6 +162,12 @@ public class AdminEditDoctorPopupController implements Initializable {
         statement.setDouble(6 ,clinicLatitude);
         statement.setString(7, DoctorToEdit.getDoctorID().toString());
 
+        statement.executeUpdate();
+    }
+
+    private void deleteDoctorData() throws SQLException {
+        PreparedStatement statement = DBControl.dbConnection.prepareStatement(DoctorDeleteStatement);
+        statement.setString(1, DoctorToEdit.getDoctorID().toString());
         statement.executeUpdate();
     }
 
