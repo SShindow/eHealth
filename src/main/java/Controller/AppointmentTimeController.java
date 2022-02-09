@@ -250,11 +250,15 @@ public class AppointmentTimeController {
      *
      * */
     public void backButtonOnAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("list_doctor.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+        Stage stage = (Stage) back_button.getScene().getWindow();
+        stage.close();
+
+//        Parent root = FXMLLoader.load(getClass().getResource("list_doctor.fxml"));
+//        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
     }
     //this button will check if user booking a valid date (not date in the past)
     // and show available time of doctor in that day

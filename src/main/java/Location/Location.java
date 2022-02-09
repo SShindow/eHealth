@@ -39,7 +39,7 @@ public class Location {
             }
             double lat = -1, lon = -1;
             for (String str : content) {
-                if (str.contains("loc")) {
+                if (str.contains("\"loc\"")) {
                     str = str.split(": ")[1];
                     String[] loc = str.split(",");
 
@@ -104,7 +104,9 @@ public class Location {
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(la1ToRad)
                 * Math.cos(la2ToRad) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c;
+
+        var result = R * c;
+        return result;
     }//Return the value(Double) after given two different latitude and longitude
 
     /**

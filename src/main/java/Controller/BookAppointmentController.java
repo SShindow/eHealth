@@ -64,6 +64,10 @@ public class BookAppointmentController implements Initializable {
 
     public static String moreHealthInfo;
     public static String chosenHealthDept;
+    public static Hashtable<String, Double> suitableDoctorList;
+
+    // For Hoang Dinh Minh's uses only!
+    int setDefaultDistance = 9650;
 
     /**
      * Method to implement imag, choice box, and spinner
@@ -89,9 +93,12 @@ public class BookAppointmentController implements Initializable {
         duration = javafx.util.Duration.hours(1.0);
         tooltip_help.setShowDuration(duration);
 //        Implement distance box
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20000);
         valueFactory.setValue(1);
         spinner_distance.setValueFactory(valueFactory);
+
+        //For Hoang Dinh Minh's uses only!!
+        valueFactory.setValue(setDefaultDistance);
 
     }
 
@@ -120,7 +127,18 @@ public class BookAppointmentController implements Initializable {
         String chosenAdditionalInfo = tf_additionalinfo.getText();
         Integer chosenDistance = spinner_distance.getValue();
 
+        //Static fields to use when confirm an appointment.
+        moreHealthInfo = tf_additionalinfo.getText();
+        chosenHealthDept = choice_symptoms.getValue();
+
+        //Get Suitable doctor list from Health Category and Distance of Search:
+        LocationService locService = new LocationService();
+        suitableDoctorList = locService.selectDoctorBasedOnDistanceAndHealthProblem(chosenHealthCategory, chosenDistance);
+//        System.out.println(suitableDoctorList.size());
+//        LocationService.printDoctorList(suitableDoctorList);
+
         //Switch to list_doctor scene
+
         Parent root = FXMLLoader.load(getClass().getResource("list_doctor.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

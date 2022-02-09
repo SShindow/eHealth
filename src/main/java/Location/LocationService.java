@@ -115,4 +115,13 @@ public class LocationService {
             System.out.println("DoctorID: " + key + ", Distance: " + out.get(key));
         }
     }
+
+    public static void printDoctorList(Hashtable<String, Double> doctorList)
+    {
+        Enumeration<String> enumeration = doctorList.keys();
+        while (enumeration.hasMoreElements()){
+            String key = enumeration.nextElement();
+            System.out.println("DoctorID: " + key + ", Distance: " + doctorList.get(key));
+        }
+    }
 }
