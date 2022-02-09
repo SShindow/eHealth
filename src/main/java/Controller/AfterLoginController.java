@@ -25,8 +25,10 @@ import java.sql.Statement;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-
-
+/**
+ * Controller class of after_login.fxml, display after logging in to the application successfully, providing various options
+ * @author Hai Cao Xuan
+ */
 public class AfterLoginController implements Initializable{
     @FXML
     private Label label_welcomemessage;
@@ -43,6 +45,11 @@ public class AfterLoginController implements Initializable{
     @FXML
     private ImageView image_background;
 
+    /**
+     * Method to initialize image
+     * @param url of the images
+     * @param resourceBundle used to store texts and components that are locale sensitive
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        Make image displayable on run
@@ -51,6 +58,11 @@ public class AfterLoginController implements Initializable{
         image_background.setImage(backgroundImage);
     }
 
+    /**
+     * Method to switch to the edit profile scene on click
+     * @param event when clicking edit profile button
+     * @throws Exception to catch unexpected exception
+     */
     public void editProfileButtonOnAction(ActionEvent event) throws Exception{
 //        Switch to edit profile stage
         Parent root = FXMLLoader.load(getClass().getResource("edit_profile.fxml"));
@@ -60,6 +72,11 @@ public class AfterLoginController implements Initializable{
         stage.show();
     }
 
+    /**
+     * Method to switch to book appointment scene on click
+     * @param event when clicking book appointment button
+     * @throws Exception to catch unexpected exception
+     */
     public void bookAppointmentButtonOnActon(ActionEvent event) throws Exception{
 //        Switch to edit profile stage
         Parent root = FXMLLoader.load(getClass().getResource("book_appointment.fxml"));
@@ -69,10 +86,19 @@ public class AfterLoginController implements Initializable{
         stage.show();
     }
 
-
-    public void viewAppointmentButtonOnAction(){
+    /**
+     * Method to switch to view appointment scene on click
+     * @param event when clicking edit profile button
+     * @throws Exception to catch unexpected exception
+     */
+    public void viewAppointmentButtonOnAction(ActionEvent event) throws Exception{
     }
 
+    /**
+     * Method to return to login scene on click
+     * @param event when clicking sign out button
+     * @throws Exception to catch unexpected exception
+     */
     public void signoutButtonOnAction(ActionEvent event) throws Exception{
 //        After pressing sign out, it will return to the main screen
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
@@ -81,12 +107,6 @@ public class AfterLoginController implements Initializable{
         stage.setScene(scene);
         stage.show();
     }
-
-
-
-
-
-
 
 
 }

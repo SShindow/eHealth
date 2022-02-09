@@ -17,16 +17,29 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Enumeration;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Controller class of list_doctor.fxml, to display a moderate amount of doctor based on patent's need
+ * @author  Hai Cao Xuan, Hoang Dinh Minh
+ */
 public class ListDoctorController implements Initializable {
 
     @FXML
@@ -43,14 +56,120 @@ public class ListDoctorController implements Initializable {
     private TableColumn<Doctor, String> col_button;
 
     @FXML
+    private TableColumn<Doctor, UUID> col_id;
+
+    @FXML
     private Button button_back;
 
     @FXML
     private ImageView image_background;
 
 
+    @FXML
+    public void adminDoctorTableViewOnMouseClicked(MouseEvent event) throws IOException, SQLException {
+        if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
+            adminDoctorTableOnMouseDoubleClicked();
+        }
+    }
+
+    private void adminDoctorTableOnMouseDoubleClicked() throws IOException, SQLException {
+        //Get the doctor from the doctor table view
+        var selectedDoctor = table_doctors.getSelectionModel().getSelectedItem();
+        if (selectedDoctor != null) {
+            showEditDoctorDialog(selectedDoctor);
+            loadDoctorFromDB();
+        }
+    }
+    void loadDoctorFromDB() throws SQLException
+    {
+        doctorSearchModelObserverableList.clear();
+        var doctorList = BookAppointmentController.suitableDoctorList;
+
+        Enumeration<String> enumeration = doctorList.keys();
+        while (enumeration.hasMoreElements()){
+
+            String doctorID = enumeration.nextElement();
+            //System.out.println("DoctorID: " + doctorID + ", Distance: " + doctorList.get(doctorID));
+
+            try
+            {
+                PreparedStatement stmt = DBControl.dbConnection.prepareStatement
+                        ("SELECT doctorID, firstName, lastName, address, clinicName\n"
+                                + " FROM doctor\n"
+                                + " WHERE doctorID = ? ");
+                stmt.setString(1, doctorID);
+                ResultSet rs = stmt.executeQuery();
+
+                rs.next();
+                String _doctorID = rs.getString(1);
+                String _firstname = rs.getString(2);
+                String _lastName = rs.getString(3);
+                String _address = rs.getString(4);
+                String _clinicName = rs.getString(5);
+
+                doctorSearchModelObserverableList.add(
+                        new Doctor(UUID.fromString(_doctorID),_firstname, _lastName, _address, _clinicName)
+                );
+
+            }catch(Exception e)
+            {
+                System.out.println("Get suitableDoctorList from Database Failed!");
+                System.out.println(e);
+            }
+        }
+//        Statement stm = DBControl.dbConnection.createStatement();
+//        ResultSet rs = stm.executeQuery("SELECT doctorID, firstName, lastName, address, clinicName\n" +
+//                "FROM doctor");
+//        while(rs.next())
+//        {
+//            String _doctorID = rs.getString(1);
+//            String _firstname = rs.getString(2);
+//            String _lastName = rs.getString(3);
+//            String _address = rs.getString(4);
+//            String _clinicName = rs.getString(5);
+//
+//            doctorSearchModelObserverableList.add(
+//                    new Doctor(UUID.fromString(_doctorID),_firstname, _lastName, _address, _clinicName)
+//            );
+//        }
+
+        col_id.setCellValueFactory(new PropertyValueFactory<Doctor, UUID>("doctorID"));
+        col_firstname.setCellValueFactory(new PropertyValueFactory<Doctor, String>("firstName"));
+        col_lastname.setCellValueFactory(new PropertyValueFactory<Doctor, String>("lastName"));
+        col_address.setCellValueFactory(new PropertyValueFactory<Doctor, String>("address"));
+        col_clinicname.setCellValueFactory(new PropertyValueFactory<Doctor, String>("clinicName"));
+
+
+        table_doctors.setItems(doctorSearchModelObserverableList);
+    }
+
+    private void showEditDoctorDialog(Doctor selectedDoctor) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource(
+                        "appointment_time.fxml"
+                )
+        );
+
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.setScene(
+                new Scene(loader.load())
+        );
+
+        AppointmentTimeController controller = loader.getController();
+        controller.initDoctorData(selectedDoctor);
+
+        // We want to disable the parent stage when the user edit dialog is on
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+    }
+
     ObservableList<Doctor> doctorSearchModelObserverableList = FXCollections.observableArrayList();
 
+    /**
+     * Method which makes the background image displayable, also initialize the table to display list of doctor
+     * @param url indicates url of image and other elements
+     * @param resourceBundle used to store texts and components that are locale sensitive
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        Make image displayable
@@ -59,8 +178,12 @@ public class ListDoctorController implements Initializable {
         image_background.setImage(backgroundImage);
 
         String doctorViewQuery = "SELECT firstName, lastName, address, clinicName FROM doctor";
-
-
+        try {
+            loadDoctorFromDB();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        /*
         try{
             Statement statement = DBControl.dbConnection.createStatement();
             ResultSet queryOutput = statement.executeQuery(doctorViewQuery);
@@ -86,8 +209,15 @@ public class ListDoctorController implements Initializable {
             e.printStackTrace();
             e.getCause();
         }
+
+         */
     }
 
+    /**
+     * Method to return to after login page on click
+     * @param event when clicking back button
+     * @throws Exception in case of encountering unexpected exception
+     */
     public void cancelButtonOnAction(ActionEvent event) throws Exception  {
         //        After click, return to the after login stage
         Parent root = FXMLLoader.load(getClass().getResource("book_appointment.fxml"));

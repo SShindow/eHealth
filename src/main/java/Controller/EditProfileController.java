@@ -21,6 +21,10 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for edit_profile.fxml, use to modify personal information then update to database
+ * @author Hai Cao Xuan, Hoang Dinh Minh
+ */
 public class EditProfileController implements Initializable {
 
     @FXML
@@ -73,6 +77,12 @@ public class EditProfileController implements Initializable {
 
     final java.sql.Date DEFAULT_DATE = java.sql.Date.valueOf("1900-01-31");
 
+
+    /**
+     * Method to make image display able
+     * @param url of images and other elements in the UI
+     * @param resourceBundle used to store texts and components that are locale sensitive
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -94,6 +104,11 @@ public class EditProfileController implements Initializable {
 
     }
 
+    /**
+     * Method to return to the after login scene on click
+     * @param event when clicking cancel button
+     * @throws Exception to detect unexpected errors
+     */
     public void cancelButtonOnAction(ActionEvent event) throws Exception {
 //          After click, return to the after login stage
         Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
@@ -103,12 +118,17 @@ public class EditProfileController implements Initializable {
         stage.show();
     }
 
-    ;
-
+    /**
+     * Method to update edited personal data, by recalling function below
+     * @param event when clicking save button
+     */
     public void saveButtonOnAction(ActionEvent event) {
         saveUserProfile();
     }
 
+    /**
+     * Method to update edited personal data
+     */
     public void saveUserProfile() {
         //loggedInUsername
         String username = tf_username.getText();
@@ -243,29 +263,41 @@ public class EditProfileController implements Initializable {
         }
     }
 
+
+    /**
+     * Method to set toggle male gender to false (default)
+     */
     @FXML
     public void genderMaleOnAction() {
         tf_gender_female.setSelected(false);
         tf_gender_other.setSelected(false);
     }
-
+    /**
+     * Method to set toggle female gender to false (default)
+     */
     @FXML
     public void genderFemaleOnAction() {
         tf_gender_male.setSelected(false);
         tf_gender_other.setSelected(false);
     }
-
+    /**
+     * Method to set toggle other gender to false (default)
+     */
     @FXML
     public void genderOtherOnAction() {
         tf_gender_male.setSelected(false);
         tf_gender_female.setSelected(false);
     }
-
+    /**
+     * Method to set toggle private insurance type to false (default)
+     */
     @FXML
     public void insuranceTypePrivateOnAction() {
         tf_insuranceType_public.setSelected(false);
     }
-
+    /**
+     * Method to set toggle public insurance type to false (default)
+     */
     @FXML
     public void insuranceTypePublicOnAction() {
         tf_insuranceType_private.setSelected(false);

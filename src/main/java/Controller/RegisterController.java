@@ -32,7 +32,10 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-
+/**
+ * Controller class of register.fxml file to register for a new account
+ * @author Hai Cao Xuan, Hoang Dinh Minh
+ */
 public class RegisterController implements Initializable {
 
     @FXML
@@ -57,6 +60,12 @@ public class RegisterController implements Initializable {
     private ImageView image_background;
 
 
+    /**
+     * Method which makes the background image displayable
+     * @author Hai Cao Xuan
+     * @param url indicates url image
+     * @param resourceBundle used to store texts and components that are locale sensitive
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         File backgroundFile = new File("stuff/background.jpg");
@@ -64,6 +73,12 @@ public class RegisterController implements Initializable {
         image_background.setImage(backgroundImage);
     }
 
+    /**
+     * Method that switch to login scene on click
+     * @author Hai Cao Xuan
+     * @param event when clicking login text
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     */
     public void loginButtonOnAction(ActionEvent event) throws IOException {
         //Switch to log in scene
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
@@ -73,6 +88,13 @@ public class RegisterController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method for check for match password before creating a new account
+     * @param event when clicking register button
+     * @throws SQLException that provides information on a database access error or other errors
+     * @throws NoSuchAlgorithmException detect other underlying exceptions
+     * @throws InvalidKeySpecException when an invalid key specification is encountered
+     */
     public void registerButtonOnAction(ActionEvent event) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
 //        If the password is match with the password confirmation
         if (field_password.getText().equals(field_password1.getText())) {
@@ -82,6 +104,12 @@ public class RegisterController implements Initializable {
         }
     }
 
+    /**
+     * Method to check for existing account in database before registering
+     * @throws NoSuchAlgorithmException detect other underlying exception
+     * @throws InvalidKeySpecException when an invalid key specification is encountered
+     * @throws SQLException that provides information on a database access error or other errors
+     */
     public void registerUser() throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException {
 
         //Get User Input from Register Page
