@@ -140,7 +140,7 @@ public class AdminEditUserPopupController implements Initializable {
     }
 
     private void updateUserData() throws SQLException {
-        PreparedStatement statement = DBControl.dbConnection.prepareStatement(UserUpdateStatement);;
+        PreparedStatement statement = DBControl.dbConnection.prepareStatement(UserUpdateStatement);
 
         statement.setString(1, tf_firstName.getText().isEmpty() ? null : tf_firstName.getText());
         statement.setString(2, tf_lastName.getText().isEmpty() ? null : tf_lastName.getText());

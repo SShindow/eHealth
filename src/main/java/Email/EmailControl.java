@@ -16,11 +16,11 @@ public class EmailControl {
     private static String pwd;
     private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-    public EmailControl(String username, String pwd) throws NoSuchProviderException, MessagingException {
-        this.username = username;
-        this.pwd=pwd;
+    public EmailControl(String username, String pwd) throws MessagingException {
+        EmailControl.username = username;
+        EmailControl.pwd =pwd;
         //this.host=host;
-        this.properties = new Properties();
+        properties = new Properties();
         //pop3 for checking mail
         properties.put("mail.pop3.host", "pop.gmail.com");
         properties.put("mail.pop3.port", "995");
@@ -32,7 +32,7 @@ public class EmailControl {
         properties.put("mail.smtp.host","smtp.gmail.com");
 
     }
-    private static Session getSession() throws NoSuchProviderException, MessagingException{
+    private static Session getSession() throws MessagingException{
         Session emailSession = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {

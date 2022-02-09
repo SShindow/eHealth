@@ -10,12 +10,12 @@ import java.time.LocalDate;
  */
 
 public class User {
-    public static enum InsuranceType {
+    public enum InsuranceType {
         Public,
         Private
     }
 
-    public static enum Gender {
+    public enum Gender {
         M,
         F,
         O

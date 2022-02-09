@@ -91,8 +91,7 @@ public class LoginController implements Initializable {
     public void loginButtonOnAction(ActionEvent event) throws IOException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
 //       if the username is not blank, go to the log in function to confirm account exist
         if (tf_username.getText().isBlank() == false && field_password.getText().isBlank() == false && validateLogin()) {
-;
-            //Switch to log in scene
+//Switch to log in scene
             Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
