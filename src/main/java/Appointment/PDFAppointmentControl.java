@@ -29,6 +29,12 @@ import java.io.FileNotFoundException;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+/**
+ * @author Chau Truong Vinh Hoang
+ * Controller class for Appointment and PDF export
+ */
+
 public class PDFAppointmentControl {
     private static Appointment getAppointment(String appointmentID) throws SQLException {
         Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
@@ -46,6 +52,12 @@ public class PDFAppointmentControl {
         //System.out.println(appointment.getPatientID());
         return appointment;
     }
+
+    /**
+     * Method to create PDF based on the booked appointment
+     * @param appointmentID indicates the ID which is generated after booking an appointment successfully
+     * @throws SQLException that provides information on a database access error or other errors
+     */
     public static void createPDFAppointment(String appointmentID) throws SQLException {
         String destinationFilePath = System.getProperty("user.dir")+"/src/main/java/Appointment/PatientAppointment.pdf";
         Appointment appointment = getAppointment(appointmentID);
@@ -105,6 +117,11 @@ public class PDFAppointmentControl {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Main function to execute the action
+     * @throws SQLException that provides information on a database access error or other errors
+     */
     public static void main(String[]args) throws SQLException {
         String appointmentID ="abc1234";
         String str= System.getProperty("user.dir")+"/src/main/java/Appointment/PatientAppointment.pdf";

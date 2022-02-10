@@ -38,7 +38,7 @@ import java.util.logging.Logger;
 
 /**
  * Controller class of list_doctor.fxml, to display a moderate amount of doctor based on patent's need
- * @author  Hai Cao Xuan, Hoang Dinh Minh
+ * @author  Hai Cao Xuan, Hoang Dinh Minh, Thong Le Thanh, Chau Truong Vinh Hoang
  */
 public class ListDoctorController implements Initializable {
 
@@ -65,6 +65,10 @@ public class ListDoctorController implements Initializable {
     private ImageView image_background;
 
 
+    /**
+     * Method to execute action on click
+     * @param event after clicking
+     */
     @FXML
     public void adminDoctorTableViewOnMouseClicked(MouseEvent event) throws IOException, SQLException {
         if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
@@ -72,6 +76,9 @@ public class ListDoctorController implements Initializable {
         }
     }
 
+    /**
+     * Method to pop up a new scene after double-clicking
+     */
     private void adminDoctorTableOnMouseDoubleClicked() throws IOException, SQLException {
         //Get the doctor from the doctor table view
         var selectedDoctor = table_doctors.getSelectionModel().getSelectedItem();
@@ -85,7 +92,6 @@ public class ListDoctorController implements Initializable {
     /**
      * Method to load suitable doctors list to Table View for user to choose to book an appointment
      * @author Hoang Dinh Minh
-     * @throws SQLException
      */
     void loadDoctorFromDB() throws SQLException
     {

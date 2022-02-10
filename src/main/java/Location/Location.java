@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * @author Thong Le Thanh
- *
+ * Class where all the calculation to find the distance between 2 points stored
  */
 public class Location {
     private double latitude;
@@ -57,7 +57,7 @@ public class Location {
 
     /**
      * set user's Latitude
-     * @param latitude
+     * @param latitude of the location
      */
     public void setLatitude(double latitude){
         this.latitude = latitude;
@@ -65,7 +65,7 @@ public class Location {
 
     /**
      * set user's Longitude
-     * @param longitude
+     * @param longitude of the location
      */
     public void setLongitude(double longitude){
         this.longitude = longitude;
@@ -73,7 +73,7 @@ public class Location {
 
     /**
      * get user's Longitude
-     * @return
+     * @return longitude value
      */
     public double getLongitude(){
         return this.longitude;
@@ -81,7 +81,7 @@ public class Location {
 
     /**
      * get user's Latitude
-     * @return
+     * @return latitude value
      */
     public double getLatitude(){
         return this.latitude;

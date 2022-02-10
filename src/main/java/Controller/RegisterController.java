@@ -105,6 +105,7 @@ public class RegisterController implements Initializable {
     }
 
     /**
+     * @author Hai Cao Xuan, Hoang Dinh Minh
      * Method to check for existing account in database before registering
      * @throws NoSuchAlgorithmException detect other underlying exception
      * @throws InvalidKeySpecException when an invalid key specification is encountered

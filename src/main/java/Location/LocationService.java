@@ -22,12 +22,23 @@ public class LocationService {
     private Hashtable<String, Location> locationStorage = new Hashtable<>();
     private Map<String, List<String>> healthDeptStorage = new HashMap<>();
 
+    /**
+     * Null constructor
+     */
     public LocationService(){}
 
+    /**
+     * Setter for location storage
+     * @param locationStorage stores the location info
+     */
     public void setLocationStorage(Hashtable<String, Location> locationStorage){
         this.locationStorage = locationStorage;
     }
 
+    /**
+     * Setter for the health department name
+     * @param healthDeptStorage  name of the department
+     */
     public void setHealthDeptStorage(Map<String, List<String>> healthDeptStorage){
         this.healthDeptStorage = healthDeptStorage;
     }
@@ -104,6 +115,9 @@ public class LocationService {
     }
 
 
+    /**
+     * Where functions is executed
+     */
     public static void main(String[] args) {
         LocationService locationService = new LocationService();
         Hashtable<String, Double> out = locationService.selectDoctorBasedOnDistanceAndHealthProblem("Surgery", 26);
@@ -115,6 +129,10 @@ public class LocationService {
         }
     }
 
+    /**
+     * Method to display doctor list
+     * @param doctorList indicates list of doctors
+     */
     public static void printDoctorList(Hashtable<String, Double> doctorList)
     {
         Enumeration<String> enumeration = doctorList.keys();

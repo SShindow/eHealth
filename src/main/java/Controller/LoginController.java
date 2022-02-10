@@ -132,7 +132,7 @@ public class LoginController implements Initializable {
      * Method that switch to recover password scene on click
      * @author Hoang Dinh Minh
      * @param event after clicking forgot password
-     * @throws IOException when encouter an I/O exception to some sort has occurred
+     * @throws IOException when encounter an I/O exception to some sort has occurred
      */
     @FXML
     public void forgotPasswordButtonOnAction(ActionEvent event) throws IOException {

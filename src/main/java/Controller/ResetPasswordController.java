@@ -77,13 +77,7 @@ public class ResetPasswordController implements Initializable {
 
     /**
      * Method to confirm User's newly created password, update User's new password to Database.
-     * @author Hoang Dinh Minh
-     * @param event
-     * @throws SQLException
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeySpecException
-     * @throws InterruptedException
-     * @throws IOException
+     * @param event after clicking confirm button
      */
     @FXML
     void confirmButtonOnAction(ActionEvent event) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException, InterruptedException, IOException {
