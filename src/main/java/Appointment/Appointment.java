@@ -7,6 +7,7 @@ package Appointment;
 
 /**
  * General class for appointment
+ * @author Chau Truong Vinh Hoang
  */
 public class Appointment {
     private String patientID;

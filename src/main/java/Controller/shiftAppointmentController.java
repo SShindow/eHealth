@@ -1,5 +1,6 @@
 package Controller;
 
+import Appointment.Appointment;
 import Appointment.PDFAppointmentControl;
 import Connection.DBControl;
 import Email.EmailControl;
@@ -28,7 +29,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+/**
+ * Controller class of shift_appointment.fxml, for user to change their appointment time
+ * @author Chau Truong Vinh Hoang
+ */
 public class shiftAppointmentController {
 
     @FXML
@@ -75,9 +79,11 @@ public class shiftAppointmentController {
     private String userChoosenReminder="";
     private String reminder_time="";
 
-    public static String appointmentID=null;
-    public static Doctor selectedDoctor = AppointmentTimeController.selectedDoctor;
-
+    private static String appointmentID=null;
+    private static String selectedDoctor=null;
+    /**
+     * Method to check if user choose a valid session date
+     */
     public boolean isStartDateValid(){
         Calendar now = Calendar.getInstance();
 
@@ -110,7 +116,10 @@ public class shiftAppointmentController {
         return false;
     }
 
-    // add button handling menu button
+    /**
+     * Method which allow user to select session time on click
+     * @param event when clicking on session time button
+     */
 
     @FXML
     void selectSessionOnAction(MouseEvent event) {
@@ -149,7 +158,10 @@ public class shiftAppointmentController {
         };
         return myEvent;
     }
-
+    /**
+     * Method which allow user to select reminder time on click
+     * @param event when clicking on reminder time button
+     */
     public void selectReminderOnAction(ActionEvent event) {
         reminder_time_selection.getItems().add(r1);
         reminder_time_selection.getItems().add(r2);
@@ -174,6 +186,10 @@ public class shiftAppointmentController {
         };
         return myEvent;
     }
+    /**
+     * Method to allow user apply the update information of appointment on click
+     * @param event when clicking on apply button
+     * */
     public void applyButtonOnAction(ActionEvent event) {
         /* For testing
         System.out.println("User choose final:"+userChoosenSession);
@@ -181,12 +197,7 @@ public class shiftAppointmentController {
         System.out.println("end time final:"+sessionEndTime);
          */
 
-
-        String healthDeptName = BookAppointmentController.chosenHealthDept;
-        String healthDescription= BookAppointmentController.moreHealthInfo;
         String sessionDate = String.valueOf(calendar_field.getValue());
-        String sessionStartAt = sessionStartTime;
-        String sessionEndAt =sessionEndTime;
 
 
 
@@ -226,16 +237,19 @@ public class shiftAppointmentController {
 
         }
     }
-    private static String getAppointmentID(String userID) throws SQLException {
+    private static String getAppointmentID(String username) throws SQLException {
         String appointmentID=null;
-        String sql1 = "Select appointmentID from appointment where patientID ='" + userID + "'";
-        Statement stmt1 = DBControl.dbConnection.createStatement();
+        String sql1 = "Select appointmentID from appointment where patientID in"+
+                "(select accountID from user where username='"+ username + "');";
+        System.out.println(sql1);
+        Statement stmt1 = DBControl.connectToDatabaseWithReturnConnection().createStatement();
         ResultSet rs1 = stmt1.executeQuery(sql1);
         while (rs1.next()){
             appointmentID=rs1.getString(1);
         }
         return appointmentID;
     }
+
     private static String getUserEmail(String username) throws SQLException {
         String sql ="select email from user where username='"+username+"'";
         Statement stmt = DBControl.dbConnection.createStatement();
@@ -246,26 +260,37 @@ public class shiftAppointmentController {
         }
         return email;
     }
+    /**
+     * Method to update the modification of session time onto the Databse
+     * @param sessionDate, sessionStartTime, sessionEndTime
+     * @throws SQLException catch exception if any
+     * */
     private void updateAppointmentTime(String sessionDate,String sessionStartTime, String sessionEndTime) throws SQLException {
-        String sql = "SET SQL_SAFE_UPDATES = 0; update appointment set sessionDate ='"+sessionDate+"', startTime='"+
+        String sql = "update appointment set sessionDate ='"+sessionDate+"', startTime='"+
                 sessionStartTime+"', endTime='"+sessionEndTime+ "' where patientID in (select accountID from user "+
-                "where username ='"+LoginController.loggedInUsername+ "'); SET SQL_SAFE_UPDATES = 1;";
+                "where username ='"+LoginController.loggedInUsername+ "');";
         Statement stmt = DBControl.dbConnection.createStatement();
         int rs = stmt.executeUpdate(sql);
     }
 
     /**
-     * Hello
-     *
+     * Method to switch user to view appointment scene on click
+     * @param event when clicking on Back button
+     * @throws IOException when encounter an I/O exception to some sort has occurred
      * */
     public void backButtonOnAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view_appointment.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
     @FXML
+    /**
+     * Method to switch user to after log in scene on click
+     * @param event when clicking on Go To Menu button
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     * */
     void goToMenuOnAction(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -273,8 +298,11 @@ public class shiftAppointmentController {
         stage.setScene(scene);
         stage.show();
     }
-    //this button will check if user booking a valid date (not date in the past)
-    // and show available time of doctor in that day
+    /**
+     * Method to notify if user enter a valid date or if their desired doctor is available on that date
+     * @param event when clicking on Check Available button
+     * @throws SQLException that provides information on a database access error or other errors
+     * */
     public void checkAvailableButtonOnAction(ActionEvent event) throws SQLException {
         //check if user booking a valid date
         if(isStartDateValid()==false){
@@ -283,11 +311,15 @@ public class shiftAppointmentController {
             return;
         }
         //get doctor available time
+        try {
+            selectedDoctor = getDoctorID(LoginController.loggedInUsername);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        String choosenDoctorID = String.valueOf(selectedDoctor.getDoctorID());
         String userPickingDate = String.valueOf(calendar_field.getValue());
         // startTimeList will return List of start time which selected doctor is busy on given date
-        ArrayList<String> startTimeList = showStartTimeWhichDoctorisBusy(userPickingDate, choosenDoctorID);
+        ArrayList<String> startTimeList = showStartTimeWhichDoctorisBusy(userPickingDate, selectedDoctor);
         String rangeOfTime = getRangeOfTimeFromList(startTimeList);
         System.out.println("range of time value:"+rangeOfTime);
         if(rangeOfTime==""){
@@ -304,6 +336,18 @@ public class shiftAppointmentController {
 
 
     }
+    private static String getDoctorID(String username) throws SQLException {
+        Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        String doctorID="";
+        String sql = "select doctorID from appointment where patientID in (select accountID from user "+
+                "where username ='"+username+"');";
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            doctorID = rs.getString(1);
+        }
+        return doctorID;
+    }
+
     private static ArrayList<String> showStartTimeWhichDoctorisBusy(String userPickingDate, String choosenDoctorID) throws SQLException {
         String sql="select startTime from appointment where doctorID = '"+choosenDoctorID+"' and sessionDate='"+userPickingDate+"'";
         Statement stmt = DBControl.dbConnection.createStatement();

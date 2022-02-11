@@ -20,12 +20,19 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-
+/**
+ * This class allow system to handle notification user through email
+ * @author  Chau Truong Vinh Hoang
+ */
 public class EmailControl {
     private static Properties properties;
     private static String username= "ehealthvgu.noreply@gmail.com";
     private static String pwd="vgu123456";
     private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    /**
+     * Constructor to set up the default system mail
+     * @throws java.security.NoSuchAlgorithmException, MessagingException catch exception if any
+     */
     public EmailControl() throws NoSuchProviderException, MessagingException {
         this.properties = new Properties();
         properties.put("mail.pop3.host", "pop.gmail.com");
@@ -39,6 +46,12 @@ public class EmailControl {
 
     }
 
+    /**
+     * Constructor set up the sender mail
+     * @param username specify mail address
+     * @param pwd specify mail corresponding password.
+     * @throws java.security.NoSuchAlgorithmException, MessagingException catch exception if any
+     */
     public EmailControl(String username, String pwd) throws NoSuchProviderException, MessagingException {
         this.username = username;
         this.pwd=pwd;
@@ -65,6 +78,9 @@ public class EmailControl {
                 });
         return emailSession;
     }
+    /**
+     * Method to allow check mail through terminal
+     */
     public static void checkMail()
     {
         try {
@@ -105,6 +121,12 @@ public class EmailControl {
             e.printStackTrace();
         }
     }
+    /**
+     * Method to set up an email for sending
+     * @param recipientAddress specify recipient mail address
+     * @param mailSubject specify mail subject
+     * @param mailContent specify mail content
+     */
     public static void sendMail(String recipientAddress, String mailSubject, String mailContent){
         try {
             Session emailSession = getSession();
@@ -141,6 +163,13 @@ public class EmailControl {
         scheduler.shutdown();
         System.out.println("Send scheduled message after "+time+ " seconds waiting...");
     }
+    /**
+     * Method to send an email with attached file (including pdf file)
+     * @param filename specify the file path
+     * @param recipientAddress specify recipient mail address
+     * @param mailSubject specify mail subject
+     * @param mailContent specify mail content
+     */
     public static void sendMailAttachedPDF(String filename, String recipientAddress, String mailSubject, String mailContent){
         try {
             Session emailSession = getSession();
@@ -181,6 +210,11 @@ public class EmailControl {
         }
 
     }
+    /**
+     * Method to notify user through email when they create an appointment successfully
+     * @param username specify the username
+     * @throws SQLException, MessagingException catch exception if any
+     */
     public static void sendAppointmentCreateSuccessfully(String username) throws SQLException, MessagingException {
         String recipientAddress = getUserEmail(username);
         String destinationFilePath = System.getProperty("user.dir")+"/src/main/java/Appointment/PatientAppointment.pdf";
@@ -189,6 +223,11 @@ public class EmailControl {
                 "Dear value customer,\nThank you for choosing our service.\n Please check your appointment" +
                         " detail below for more information\nRegards,\nEhealth Service Team");
     }
+    /**
+     * Method to notify user through email when they update their appointment successfully
+     * @param username specify the username
+     * @throws SQLException, MessagingException catch exception if any
+     */
     public static void sendAppointmentUpdatedSuccessfully(String username) throws SQLException, MessagingException {
         String recipientAddress = getUserEmail(username);
         String destinationFilePath = System.getProperty("user.dir")+"/src/main/java/Appointment/PatientAppointment.pdf";
@@ -197,6 +236,12 @@ public class EmailControl {
                 "Dear value customer,\nYour appointment has been updated as your request.\n Please check your appointment" +
                         " detail below for more information\nRegards,\nEhealth Service Team");
     }
+    /**
+     * Method to notify user through email about their upcomming appointment
+     * @param username specify the username
+     * @param reminder_time specify the reminder time
+     * @throws SQLException, MessagingException catch exception if any
+     */
     public static void sendMailReminder(String username, int reminder_time) throws SQLException, MessagingException {
         String recipientAddress = getUserEmail(username);
         new EmailControl().sendScheduledMail(reminder_time,recipientAddress,
@@ -215,11 +260,6 @@ public class EmailControl {
         System.out.println("User mail:"+email);
         return email;
     }
-    public static void main(String[] args) throws MessagingException, SQLException {
 
-        new EmailControl().sendAppointmentCreateSuccessfully("chautruongvinhhoang12345");
-        new EmailControl().sendMailReminder("chautruongvinhhoang12345",3);
-
-    }
 
 }

@@ -55,8 +55,9 @@ public class PDFAppointmentControl implements Initializable {
             appointment.setDoctorID(rs.getString(3));
             appointment.setHealthDeptName(rs.getString(4));
             appointment.setHealthDescription(rs.getString(5));
-            appointment.setSessionStartTime(rs.getString(6));
-            appointment.setSessionEndTime(rs.getString(7));
+            appointment.setSessionStartDate(rs.getString((6)));
+            appointment.setSessionStartTime(rs.getString(7));
+            appointment.setSessionEndTime(rs.getString(8));
         }
         //System.out.println(appointment.getPatientID());
         return appointment;

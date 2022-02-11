@@ -31,7 +31,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
-
+/**
+ * Controller class of appointment_time.fxml, for user to set up their session appointment time
+ * @author Chau Truong Vinh Hoang
+ */
 public class AppointmentTimeController implements Initializable {
 
     @FXML
@@ -117,9 +120,10 @@ public class AppointmentTimeController implements Initializable {
         }
         return false;
     }
-
-    // add button handling menu button
-
+    /**
+     * Method which allow user to select session time on click
+     * @param event when clicking on session time button
+     */
     @FXML
     void selectSessionOnAction(MouseEvent event) {
     }
@@ -178,6 +182,10 @@ public class AppointmentTimeController implements Initializable {
         };
         return myEvent;
     }
+    /**
+     * Method to allow user apply the update information of appointment on click
+     * @param event when clicking on apply button
+     * */
     public void applyButtonOnAction(ActionEvent event) {
         /* Uncomment for testing
         System.out.println("User choose final:"+userChoosenSession);
@@ -207,7 +215,7 @@ public class AppointmentTimeController implements Initializable {
         String sql = "insert into appointment values('"+appointmentID+"'"+
                 ",'"+userID+"','"+doctorID+"','"+healthDeptName+"','"+healthDescription+"','"+
                 sessionDate+"','"+sessionStartTime+"','"+sessionEndTime+"')";
-        System.out.println(sql);
+        //System.out.println(sql);
         SQLException exception=null;
         try {
             addAppointment2Database(sql);
@@ -268,8 +276,9 @@ public class AppointmentTimeController implements Initializable {
         return accountID;
     }
     /**
-     * Hello
-     *
+     * Method to switch user to list doctor scene on click
+     * @param event when clicking on Back button
+     * @throws IOException when encounter an I/O exception to some sort has occurred
      * */
     public void backButtonOnAction(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("list_doctor.fxml"));
@@ -278,6 +287,11 @@ public class AppointmentTimeController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    /**
+     * Method to switch user to after login scene on click
+     * @param event when clicking on Go To Menu button
+     * @throws IOException when encounter an I/O exception to some sort has occurred
+     * */
     @FXML
     void goToMenuOnAction(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
@@ -286,8 +300,11 @@ public class AppointmentTimeController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    //this button will check if user booking a valid date (not date in the past)
-    // and show available time of doctor in that day
+    /**
+     * Method to notify if user enter a valid date or if their desired doctor is available on that date
+     * @param event when clicking on Check Available button
+     * @throws SQLException that provides information on a database access error or other errors
+     * */
     public void checkAvailableButtonOnAction(ActionEvent event) throws SQLException {
         //check if user booking a valid date
         if(isStartDateValid()==false){

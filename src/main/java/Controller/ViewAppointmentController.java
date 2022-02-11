@@ -23,7 +23,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
-
+/**
+ * Controller class of view_appointment.fxml, for user to view their appointment if any
+ * @author Chau Truong Vinh Hoang
+ */
 public class ViewAppointmentController implements Initializable {
 
     @FXML
@@ -147,6 +150,11 @@ public class ViewAppointmentController implements Initializable {
         start_time_field.setText(userAppointment.getSessionStartTime());
         end_time_field.setText(userAppointment.getSessionEndTime());
     }
+    /**
+     * Method which allow user to get back to after login scene on click
+     * @param event when clicking on session time button
+     * @throws IOException handle user input output error
+     */
 
     @FXML
     void backButtonOnAction(ActionEvent event) throws IOException {
@@ -178,7 +186,11 @@ public class ViewAppointmentController implements Initializable {
         }
         return appointment;
     }
-
+    /**
+     * Method to show user appointment if any
+     * @param event when clicking on Show Appointment button
+     * @throws SQLException catch SQL error if any
+     * */
     @FXML
     void showButtonOnAction(ActionEvent event) throws SQLException {
         String username= LoginController.loggedInUsername;
@@ -215,7 +227,11 @@ public class ViewAppointmentController implements Initializable {
         start_time_field.setText(userAppointment.getSessionStartTime());
         end_time_field.setText(userAppointment.getSessionEndTime());
     }
-
+    /**
+     * Method to delete user appointment on database
+     * @param username specify the username
+     * @throws SQLException catch SQL error if any
+     * */
     private void deleteAppointmentFromDatabase(String username) throws SQLException {
         //SET SQL_SAFE_UPDATES = 0;
         //delete from appointment where patientID in
@@ -243,13 +259,24 @@ public class ViewAppointmentController implements Initializable {
         }
 
     }
+    /**
+     * Method to allow user to cancel their appointment
+     * @param event when clicking on Cancel button
+     * */
     @FXML
     void cancelButtonOnAction(ActionEvent event){
         String username= LoginController.loggedInUsername;
         SQLException exception=null;
         try {
-
             deleteAppointmentFromDatabase(username);
+            patient_name_field.setText("");
+            doctor_name_field.setText("");
+            department_name_field.setText("");
+            health_category_field.setText("");
+            health_description_field.setText("");
+            start_date_field.setText("");
+            start_time_field.setText("");
+            end_time_field.setText("");
         } catch (SQLException e) {
             exception=e;
             e.printStackTrace();
@@ -264,7 +291,11 @@ public class ViewAppointmentController implements Initializable {
             return;
         }
     }
-
+    /**
+     * Method allow user to switch on shift appointment scene
+     * @param event when clicking on Shift Appointment button
+     * @throws IOException catch user interaction error if any
+     * */
     @FXML
     void shiftButtonOnAction(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("shift_appointment.fxml"));
