@@ -41,6 +41,11 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Button>
+                  <Label layoutX="20.0" layoutY="34.0" text="Welcome User!">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
                     </children>
                 </AnchorPane>
             </children>
