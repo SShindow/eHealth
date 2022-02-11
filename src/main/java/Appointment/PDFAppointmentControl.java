@@ -4,6 +4,7 @@ import Connection.DBControl;
 
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 
 import com.itextpdf.kernel.font.PdfFont;
@@ -24,9 +25,11 @@ import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.layout.property.TextAlignment;
+import javafx.fxml.Initializable;
 
 import java.io.FileNotFoundException;
 
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,9 +38,15 @@ import java.util.logging.Logger;
  * Controller class for Appointment and PDF export
  */
 
-public class PDFAppointmentControl {
+public class PDFAppointmentControl implements Initializable {
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
     private static Appointment getAppointment(String appointmentID) throws SQLException {
-        Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        Statement stmt = DBControl.dbConnection.createStatement();
         String sql = "select * from appointment where appointmentID='"+appointmentID+"'";
         ResultSet rs = stmt.executeQuery(sql);
         Appointment appointment = new Appointment();
@@ -62,7 +71,7 @@ public class PDFAppointmentControl {
         String destinationFilePath = System.getProperty("user.dir")+"/src/main/java/Appointment/PatientAppointment.pdf";
         Appointment appointment = getAppointment(appointmentID);
         String patientName = null;
-        Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        Statement stmt = DBControl.dbConnection.createStatement();
         String sql = "select firstName, lastName from user where accountID='"+appointment.getPatientID()+"'";
         ResultSet rs = stmt.executeQuery(sql);
         while(rs.next()){
@@ -71,7 +80,7 @@ public class PDFAppointmentControl {
 
         String doctorName = null;
         String clinicName = null;
-        Statement stmt2 = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        Statement stmt2 = DBControl.dbConnection.createStatement();
         String sql2 = "select firstName, lastName, clinicName from doctor where doctorID='"+appointment.getDoctorID()+"'";
         ResultSet rs2 = stmt.executeQuery(sql2);
         while(rs2.next()){

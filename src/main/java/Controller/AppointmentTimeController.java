@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,6 +21,7 @@ import org.controlsfx.control.action.Action;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -28,8 +30,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.ResourceBundle;
 
-public class AppointmentTimeController {
+public class AppointmentTimeController implements Initializable {
 
     @FXML
     private Button back_button;
@@ -78,6 +81,11 @@ public class AppointmentTimeController {
     public static String appointmentID=null;
     public static Doctor selectedDoctor;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setUpSessionSelections();
+    }
+
     public boolean isStartDateValid(){
         Calendar now = Calendar.getInstance();
 
@@ -114,40 +122,36 @@ public class AppointmentTimeController {
 
     @FXML
     void selectSessionOnAction(MouseEvent event) {
+    }
+
+    private void setUpSessionSelections() {
         session_selection.getItems().add(s1);
         session_selection.getItems().add(s2);
         session_selection.getItems().add(s3);
         session_selection.getItems().add(s4);
         session_selection.getItems().add(s5);
 
-        s1.setOnAction(setUpEventSession(s1));
-        s2.setOnAction(setUpEventSession(s2));
-        s3.setOnAction(setUpEventSession(s3));
-        s4.setOnAction(setUpEventSession(s4));
-        s5.setOnAction(setUpEventSession(s5));
-        System.out.println("User choose 2:"+userChoosenSession);
+        for (final MenuItem item : session_selection.getItems()) {
+            item.setOnAction((event) -> {
+                onSessionSelected(event, item);
+            });
+        }
     }
 
-    private EventHandler<ActionEvent> setUpEventSession (MenuItem s){
-        EventHandler<ActionEvent> myEvent = new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                session_selection.setText(s.getText());
-                userChoosenSession = s.getText();
-                //System.out.println("User choose:"+userChoosenSession);
-                //get start time session
-                int Sfrom =userChoosenSession.indexOf("From ")+"From ".length();
-                int Sto  = userChoosenSession.indexOf("to");
-                sessionStartTime = userChoosenSession.substring(Sfrom,Sto-1);
-                //System.out.println("start time:"+sessionStartTime);
-                //get end time session
-                int Efrom = userChoosenSession.indexOf("to ")+"to ".length();
-                int Eto = userChoosenSession.length();
-                sessionEndTime = userChoosenSession.substring(Efrom,Eto);
-                //System.out.println("end time:"+sessionEndTime);
-            }
-        };
-        return myEvent;
+    private void onSessionSelected(ActionEvent actionEvent, MenuItem menuItem) {
+            //System.out.println("User choose:"+userChoosenSession);
+            session_selection.setText(menuItem.getText());
+            userChoosenSession = menuItem.getText();
+
+            int Sfrom =userChoosenSession.indexOf("From ")+"From ".length();
+            int Sto  = userChoosenSession.indexOf("to");
+            sessionStartTime = userChoosenSession.substring(Sfrom,Sto-1);
+            //System.out.println("start time:"+sessionStartTime);
+            //get end time session
+            int Efrom = userChoosenSession.indexOf("to ")+"to ".length();
+            int Eto = userChoosenSession.length();
+            sessionEndTime = userChoosenSession.substring(Efrom,Eto);
+            //System.out.println("end time:"+sessionEndTime);
     }
 
     public void selectReminderOnAction(ActionEvent event) {
@@ -241,7 +245,7 @@ public class AppointmentTimeController {
     }
     private static String getUserEmail(String username) throws SQLException {
         String sql ="select email from user where username='"+username+"'";
-        Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        Statement stmt = DBControl.dbConnection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         String email="";
         while(rs.next()){
@@ -250,12 +254,12 @@ public class AppointmentTimeController {
         return email;
     }
     private void addAppointment2Database(String sql) throws SQLException {
-        Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        Statement stmt = DBControl.dbConnection.createStatement();
         int rs = stmt.executeUpdate(sql);
     }
     private String getAccountID(String username) throws SQLException {
         String sql ="select accountID from user where username='"+username+"'";
-        Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        Statement stmt = DBControl.dbConnection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         String accountID="";
         while(rs.next()){
@@ -316,7 +320,7 @@ public class AppointmentTimeController {
     }
     private static ArrayList<String> showStartTimeWhichDoctorisBusy(String userPickingDate, String choosenDoctorID) throws SQLException {
         String sql="select startTime from appointment where doctorID = '"+choosenDoctorID+"' and sessionDate='"+userPickingDate+"'";
-        Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        Statement stmt = DBControl.dbConnection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         ArrayList<String> startTimeList = new ArrayList<String>();
         while(rs.next()){

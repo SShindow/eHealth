@@ -206,7 +206,7 @@ public class EmailControl {
     }
     private static String getUserEmail(String username) throws SQLException {
         String sql ="select email from user where username='"+username+"'";
-        Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        Statement stmt = DBControl.dbConnection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         String email="";
         while(rs.next()){

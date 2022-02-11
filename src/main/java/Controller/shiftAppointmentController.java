@@ -229,7 +229,7 @@ public class shiftAppointmentController {
     private static String getAppointmentID(String userID) throws SQLException {
         String appointmentID=null;
         String sql1 = "Select appointmentID from appointment where patientID ='" + userID + "'";
-        Statement stmt1 = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        Statement stmt1 = DBControl.dbConnection.createStatement();
         ResultSet rs1 = stmt1.executeQuery(sql1);
         while (rs1.next()){
             appointmentID=rs1.getString(1);
@@ -238,7 +238,7 @@ public class shiftAppointmentController {
     }
     private static String getUserEmail(String username) throws SQLException {
         String sql ="select email from user where username='"+username+"'";
-        Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        Statement stmt = DBControl.dbConnection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         String email="";
         while(rs.next()){
@@ -250,7 +250,7 @@ public class shiftAppointmentController {
         String sql = "SET SQL_SAFE_UPDATES = 0; update appointment set sessionDate ='"+sessionDate+"', startTime='"+
                 sessionStartTime+"', endTime='"+sessionEndTime+ "' where patientID in (select accountID from user "+
                 "where username ='"+LoginController.loggedInUsername+ "'); SET SQL_SAFE_UPDATES = 1;";
-        Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        Statement stmt = DBControl.dbConnection.createStatement();
         int rs = stmt.executeUpdate(sql);
     }
 
@@ -306,7 +306,7 @@ public class shiftAppointmentController {
     }
     private static ArrayList<String> showStartTimeWhichDoctorisBusy(String userPickingDate, String choosenDoctorID) throws SQLException {
         String sql="select startTime from appointment where doctorID = '"+choosenDoctorID+"' and sessionDate='"+userPickingDate+"'";
-        Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        Statement stmt = DBControl.dbConnection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         ArrayList<String> startTimeList = new ArrayList<String>();
         while(rs.next()){
