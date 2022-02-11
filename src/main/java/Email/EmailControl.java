@@ -1,26 +1,49 @@
 package Email;
 
+import Connection.DBControl;
+
+import java.io.File;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class EmailControl {
     private static Properties properties;
-    private static String username;
-    private static String pwd;
+    private static String username= "ehealthvgu.noreply@gmail.com";
+    private static String pwd="vgu123456";
     private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    public EmailControl() throws NoSuchProviderException, MessagingException {
+        this.properties = new Properties();
+        properties.put("mail.pop3.host", "pop.gmail.com");
+        properties.put("mail.pop3.port", "995");
+        properties.put("mail.pop3.starttls.enable", "true");
 
-    public EmailControl(String username, String pwd) throws MessagingException {
-        EmailControl.username = username;
-        EmailControl.pwd =pwd;
+        //smtp for sending mail
+        properties.put("mail.smtp.auth","true");
+        properties.put("mail.smtp.starttls.enable", true);
+        properties.put("mail.smtp.host","smtp.gmail.com");
+
+    }
+
+    public EmailControl(String username, String pwd) throws NoSuchProviderException, MessagingException {
+        this.username = username;
+        this.pwd=pwd;
         //this.host=host;
-        properties = new Properties();
+        this.properties = new Properties();
         //pop3 for checking mail
         properties.put("mail.pop3.host", "pop.gmail.com");
         properties.put("mail.pop3.port", "995");
@@ -32,7 +55,7 @@ public class EmailControl {
         properties.put("mail.smtp.host","smtp.gmail.com");
 
     }
-    private static Session getSession() throws MessagingException{
+    private static Session getSession() throws NoSuchProviderException, MessagingException{
         Session emailSession = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
@@ -116,7 +139,87 @@ public class EmailControl {
         }; // Creating a new runnable task which will be passed as an argument to scheduler
         scheduler.schedule(beeper, time, SECONDS); // Creates and executes a one-shot action that becomes enabled after the given delay.
         scheduler.shutdown();
-        System.out.println("Send scheduled message after "+time+ " seconds successfully");
+        System.out.println("Send scheduled message after "+time+ " seconds waiting...");
+    }
+    public static void sendMailAttachedPDF(String filename, String recipientAddress, String mailSubject, String mailContent){
+        try {
+            Session emailSession = getSession();
+            Message message = new MimeMessage(emailSession);
+
+            message.setFrom();
+
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientAddress));
+
+            message.setSubject(mailSubject);
+            BodyPart messageBodyPart = new MimeBodyPart();
+
+            // Now set the actual message
+            messageBodyPart.setText(mailContent);
+
+            // Create a multipar message
+            Multipart multipart = new MimeMultipart();
+
+            // Set text message part
+            multipart.addBodyPart(messageBodyPart);
+
+            // Part two is attachment
+            messageBodyPart = new MimeBodyPart();
+            DataSource source = new FileDataSource(filename);
+            messageBodyPart.setDataHandler(new DataHandler(source));
+            messageBodyPart.setFileName(new File(filename).getName());
+            multipart.addBodyPart(messageBodyPart);
+
+            // Send the complete message parts
+            message.setContent(multipart);
+
+            // Send message
+            Transport.send(message);
+
+            System.out.println("Sent message successfully!!!");
+        } catch (MessagingException ex) {
+            throw new RuntimeException(ex);
+        }
+
+    }
+    public static void sendAppointmentCreateSuccessfully(String username) throws SQLException, MessagingException {
+        String recipientAddress = getUserEmail(username);
+        String destinationFilePath = System.getProperty("user.dir")+"/src/main/java/Appointment/PatientAppointment.pdf";
+        new EmailControl().sendMailAttachedPDF(destinationFilePath,recipientAddress,
+                "[Ehealth Service] You have created an appointment with our doctor",
+                "Dear value customer,\nThank you for choosing our service.\n Please check your appointment" +
+                        " detail below for more information\nRegards,\nEhealth Service Team");
+    }
+    public static void sendAppointmentUpdatedSuccessfully(String username) throws SQLException, MessagingException {
+        String recipientAddress = getUserEmail(username);
+        String destinationFilePath = System.getProperty("user.dir")+"/src/main/java/Appointment/PatientAppointment.pdf";
+        new EmailControl().sendMailAttachedPDF(destinationFilePath,recipientAddress,
+                "[Ehealth Service] Updated Appointment",
+                "Dear value customer,\nYour appointment has been updated as your request.\n Please check your appointment" +
+                        " detail below for more information\nRegards,\nEhealth Service Team");
+    }
+    public static void sendMailReminder(String username, int reminder_time) throws SQLException, MessagingException {
+        String recipientAddress = getUserEmail(username);
+        new EmailControl().sendScheduledMail(reminder_time,recipientAddress,
+                "Appointment Reminder","Dear value customer,\n" +
+                        "Please note that you have the upcoming appointment with our doctor after "+reminder_time+"s\n"+
+                        "Please check your appointment detail we sent you\nRegards\nEhealth Service Team");
+    }
+    private static String getUserEmail(String username) throws SQLException {
+        String sql ="select email from user where username='"+username+"'";
+        Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        String email="";
+        while(rs.next()){
+            email = rs.getString(1);
+        }
+        System.out.println("User mail:"+email);
+        return email;
+    }
+    public static void main(String[] args) throws MessagingException, SQLException {
+
+        new EmailControl().sendAppointmentCreateSuccessfully("chautruongvinhhoang12345");
+        new EmailControl().sendMailReminder("chautruongvinhhoang12345",3);
+
     }
 
 }

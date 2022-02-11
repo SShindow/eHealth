@@ -15,6 +15,7 @@ module com.example.test {
     requires kernel;
     requires layout;
     requires io;
+    requires activation;
 
     opens Controller to javafx.fxml;
     exports Controller;

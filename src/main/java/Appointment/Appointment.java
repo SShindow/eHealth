@@ -13,6 +13,7 @@ public class Appointment {
     private String doctorID;
     private String healthDeptName;
     private String healthDescription;
+    private String sessionStartDate;
     private String sessionStartTime;
     private String sessionEndTime;
 
@@ -48,10 +49,9 @@ public class Appointment {
         return doctorID;
     }
 
-    /**
-     * Setter for the health department
-     * @param healthDeptName is the name of the department
-     */
+    public void setSessionStartDate(String sessionStartDate){this.sessionStartDate=sessionStartDate;}
+    public String getSessionStartDate(){return sessionStartDate;}
+
     public void setHealthDeptName(String healthDeptName) {
         this.healthDeptName = healthDeptName;
     }

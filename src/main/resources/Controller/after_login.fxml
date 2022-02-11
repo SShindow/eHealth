@@ -31,7 +31,7 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Button>
-                        <Button fx:id="button_viewappointment" layoutX="39.0" layoutY="196.0" mnemonicParsing="false" style="-fx-background-color: #4BBFE6;" text="View Appointment" textFill="WHITE">
+                        <Button fx:id="button_viewappointment" layoutX="39.0" layoutY="196.0" mnemonicParsing="false" onAction="#viewAppointmentButtonOnAction" style="-fx-background-color: #4BBFE6;" text="View Appointment" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>

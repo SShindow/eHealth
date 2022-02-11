@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AppointmentTimeController {
+public class shiftAppointmentController {
 
     @FXML
     private Button back_button;
@@ -76,7 +76,7 @@ public class AppointmentTimeController {
     private String reminder_time="";
 
     public static String appointmentID=null;
-    public static Doctor selectedDoctor;
+    public static Doctor selectedDoctor = AppointmentTimeController.selectedDoctor;
 
     public boolean isStartDateValid(){
         Calendar now = Calendar.getInstance();
@@ -175,38 +175,24 @@ public class AppointmentTimeController {
         return myEvent;
     }
     public void applyButtonOnAction(ActionEvent event) {
-        /* Uncomment for testing
+        /* For testing
         System.out.println("User choose final:"+userChoosenSession);
         System.out.println("start time final:"+sessionStartTime);
         System.out.println("end time final:"+sessionEndTime);
          */
-        //System.out.println("User reminder time final:"+reminder_time);
 
-        appointmentID = ForgotPasswordController.generateRandomString(8);
-        String userID = "";
-        try {
-            userID = getAccountID(LoginController.loggedInUsername);
-            System.out.println(userID);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        String userEmail ="";
 
-        String doctorID= String.valueOf(selectedDoctor.getDoctorID());
         String healthDeptName = BookAppointmentController.chosenHealthDept;
         String healthDescription= BookAppointmentController.moreHealthInfo;
         String sessionDate = String.valueOf(calendar_field.getValue());
         String sessionStartAt = sessionStartTime;
         String sessionEndAt =sessionEndTime;
-        System.out.println("Session date:"+sessionDate);
 
-        String sql = "insert into appointment values('"+appointmentID+"'"+
-                ",'"+userID+"','"+doctorID+"','"+healthDeptName+"','"+healthDescription+"','"+
-                sessionDate+"','"+sessionStartTime+"','"+sessionEndTime+"')";
-        System.out.println(sql);
+
+
         SQLException exception=null;
         try {
-            addAppointment2Database(sql);
+            updateAppointmentTime(sessionDate, sessionStartTime,sessionEndTime);
         } catch (SQLException e) {
             exception=e;
             System.out.println("User enter wrong field");
@@ -214,14 +200,15 @@ public class AppointmentTimeController {
             label_caution_message_2.setText("Please check available and set up all requirements!");
             label_caution_message_2.setTextFill(Color.RED);
         }
-        System.out.println(exception);
+        //System.out.println(exception);
         if (exception==null) {
-            System.out.println("User create appointment!");
-            label_caution_message_2.setText("Your appointment is created successfully! Back to main menu");
+            System.out.println("User update appointment!");
+            label_caution_message_2.setText("You have updated your appointment! Back to main menu");
             label_caution_message_2.setTextFill(Color.GREEN);
             try {
+                appointmentID = getAppointmentID(LoginController.loggedInUsername);
                 PDFAppointmentControl.createPDFAppointment(appointmentID);
-                EmailControl.sendAppointmentCreateSuccessfully(LoginController.loggedInUsername);
+                EmailControl.sendAppointmentUpdatedSuccessfully(LoginController.loggedInUsername);
 
                 if(reminder_time.contains("1 min")==true){
                     System.out.println("Reminder time contains 1 min");
@@ -239,6 +226,16 @@ public class AppointmentTimeController {
 
         }
     }
+    private static String getAppointmentID(String userID) throws SQLException {
+        String appointmentID=null;
+        String sql1 = "Select appointmentID from appointment where patientID ='" + userID + "'";
+        Statement stmt1 = DBControl.connectToDatabaseWithReturnConnection().createStatement();
+        ResultSet rs1 = stmt1.executeQuery(sql1);
+        while (rs1.next()){
+            appointmentID=rs1.getString(1);
+        }
+        return appointmentID;
+    }
     private static String getUserEmail(String username) throws SQLException {
         String sql ="select email from user where username='"+username+"'";
         Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
@@ -249,26 +246,20 @@ public class AppointmentTimeController {
         }
         return email;
     }
-    private void addAppointment2Database(String sql) throws SQLException {
+    private void updateAppointmentTime(String sessionDate,String sessionStartTime, String sessionEndTime) throws SQLException {
+        String sql = "SET SQL_SAFE_UPDATES = 0; update appointment set sessionDate ='"+sessionDate+"', startTime='"+
+                sessionStartTime+"', endTime='"+sessionEndTime+ "' where patientID in (select accountID from user "+
+                "where username ='"+LoginController.loggedInUsername+ "'); SET SQL_SAFE_UPDATES = 1;";
         Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
         int rs = stmt.executeUpdate(sql);
     }
-    private String getAccountID(String username) throws SQLException {
-        String sql ="select accountID from user where username='"+username+"'";
-        Statement stmt = DBControl.connectToDatabaseWithReturnConnection().createStatement();
-        ResultSet rs = stmt.executeQuery(sql);
-        String accountID="";
-        while(rs.next()){
-            accountID = rs.getString(1);
-        }
-        return accountID;
-    }
+
     /**
      * Hello
      *
      * */
     public void backButtonOnAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("list_doctor.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -304,7 +295,6 @@ public class AppointmentTimeController {
             label_caution_message.setTextFill(Color.GREEN);
         } else {
             // getRangeOfTimeFromList will return String rangeOFTime like: "8:00-9:00, 10:00-11:00"
-            //String rangeOfTime = getRangeOfTimeFromList(startTimeList);
             String caution = "Your choosen doctor isn't available" +
                     " for booking in: " + rangeOfTime;
             System.out.println(caution);
@@ -346,14 +336,6 @@ public class AppointmentTimeController {
         return rangeOfTime;
     }
 
-
-    public void initDoctorData(Doctor doctor) {
-        selectedDoctor = doctor;
-        System.out.println("Doctor ID:"+selectedDoctor.getDoctorID());
-        String healthDescription= BookAppointmentController.moreHealthInfo;
-        String healthDept = BookAppointmentController.chosenHealthDept;
-        System.out.println(healthDept+" "+healthDescription);
-    }
 
 
 }
