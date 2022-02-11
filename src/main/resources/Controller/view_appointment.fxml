@@ -17,12 +17,12 @@
                 <Text fx:id="doctor_name_field" layoutX="215.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="129.21630859375" />
                 <Label layoutX="86.0" layoutY="140.0" prefHeight="17.0" prefWidth="104.0" text="Health category:" />
                 <Label layoutX="86.0" layoutY="169.0" prefHeight="17.0" prefWidth="111.0" text="Department name:" />
-                <Text fx:id="health_category_field" layoutX="215.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="129.21630859375" />
-                <Text fx:id="department_name_field" layoutX="215.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="129.21630859375" />
+                <Text fx:id="health_category_field" layoutX="213.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="262.21630859375" />
+                <Text fx:id="department_name_field" layoutX="213.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="256.21630859375" />
                 <Label layoutX="86.0" layoutY="260.0" prefHeight="17.0" prefWidth="111.0" text="Health description:" />
                 <Text fx:id="health_description_field" layoutX="211.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="319.21630859375" AnchorPane.leftAnchor="215.0" />
                 <Label layoutX="86.0" layoutY="192.0" prefHeight="17.0" prefWidth="111.0" text="Appointment date:" />
-                <Text fx:id="start_date_field" layoutX="215.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="156.21630859375" />
+                <Text fx:id="start_date_field" layoutX="214.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="173.21630859375" />
                 <Button fx:id="button_cancel" layoutX="232.0" layoutY="318.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="26.0" prefWidth="146.0" style="-fx-background-color: #4BBFE6;" text="Cancel your appointment" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="12.0" />
