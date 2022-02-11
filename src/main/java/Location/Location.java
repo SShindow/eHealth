@@ -39,7 +39,7 @@ public class Location {
             }
             double lat = -1, lon = -1;
             for (String str : content) {
-                if (str.contains("\"loc\"")) {
+                if (str.contains("\"loc\"") && !str.contains("local")) {
                     str = str.split(": ")[1];
                     String[] loc = str.split(",");
 
