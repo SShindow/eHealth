@@ -4,6 +4,7 @@ public class Appointment {
     private String doctorID;
     private String healthDeptName;
     private String healthDescription;
+    private String sessionStartDate;
     private String sessionStartTime;
     private String sessionEndTime;
     public void setPatientID(String patientID){
@@ -20,6 +21,9 @@ public class Appointment {
     public String getDoctorID() {
         return doctorID;
     }
+
+    public void setSessionStartDate(String sessionStartDate){this.sessionStartDate=sessionStartDate;}
+    public String getSessionStartDate(){return sessionStartDate;}
 
     public void setHealthDeptName(String healthDeptName) {
         this.healthDeptName = healthDeptName;

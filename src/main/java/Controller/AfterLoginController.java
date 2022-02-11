@@ -92,6 +92,11 @@ public class AfterLoginController implements Initializable{
      * @throws Exception to catch unexpected exception
      */
     public void viewAppointmentButtonOnAction(ActionEvent event) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("view_appointment.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
