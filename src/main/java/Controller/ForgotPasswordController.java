@@ -73,12 +73,11 @@ public class ForgotPasswordController implements Initializable {
 
     /**
      * Method to recover password by sending recovery code to email
-     * @throws MessagingException specifies Exception and detail message
      * @throws SQLException that provides information on a database access error or other errors
      * @throws InterruptedException when a thread is waiting, sleeping, or otherwise occupied
      */
     @FXML
-    public void recoverSendEmailButtonOnAction() throws MessagingException, SQLException, InterruptedException {
+    public void recoverSendEmailButtonOnAction() throws SQLException, InterruptedException, MessagingException {
         tf_recoverMessage.setText("Sending Email...");
         if(tf_recoverEmail.getLength() == 0 && tf_recoverUsername.getLength() == 0)
         {
