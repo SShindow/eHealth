@@ -40,7 +40,7 @@ In order to modify the elements in the user interface, you must download and ins
 
 ---
 
-# 😎 Collaborator
+# 😎 Conclusion
 
 Afterall, this is still a project of a course in our major at Frankfurt University of Applied Sciene. However, during this project we have learnt how to be adaptable and inventive when faced with challenges, especially while learning a new programming language that will serve as a solid foundation for our future endeavors. In my perspective, the main purpouse of this project is not only to satisfy the requirement of the course, but also build a fundamental for the industry business later, especially when it comes to communication, self management and the willingness to learn.
 
