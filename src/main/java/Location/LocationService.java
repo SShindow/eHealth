@@ -8,7 +8,7 @@ import Connection.DBControl;
 
 /**
  * @author Thong Le Thanh
- * This class base on health problems category, input desirable distance to find out doctorID and his/her distance to that doctor
+ * This class base on health problems category, input desirable distance to find out stuitable doctorID from user location
  */
 public class LocationService {
 

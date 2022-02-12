@@ -227,6 +227,11 @@ public class ForgotPasswordController implements Initializable {
         return rs.getString(1);
     }
 
+    /**
+     * Method to generate random string
+     * @param stringLength length of the string
+     * @return result after random generating
+     */
     public static String generateRandomString(int stringLength) {
         Random rand = new Random();
         String result = "";

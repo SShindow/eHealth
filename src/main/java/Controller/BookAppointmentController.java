@@ -62,8 +62,17 @@ public class BookAppointmentController implements Initializable {
     @FXML
     private Tooltip tooltip_help;
 
+    /**
+     * Static variable for user health description
+     */
     public static String moreHealthInfo;
+    /**
+     * Static variable for health department
+     */
     public static String chosenHealthDept;
+    /**
+     * Static array of getting doctor ID
+     */
     public static Hashtable<String, Double> suitableDoctorList;
 
     // For Hoang Dinh Minh's uses only!

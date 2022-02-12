@@ -41,6 +41,9 @@ import java.util.logging.Logger;
 public class PDFAppointmentControl implements Initializable {
 
     @Override
+    /**
+     * Initialize function
+     */
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }

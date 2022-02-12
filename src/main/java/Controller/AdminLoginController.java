@@ -138,6 +138,11 @@ public class AdminLoginController implements Initializable {
         }
     }
 
+    /**
+     * Method
+     * @param DBUsername of DB
+     * @return salted value
+     */
     byte[] getSaltFromDBUsernameAdmin(String DBUsername) throws SQLException {
         //Connection connection = getConnection();
         String query = "SELECT adminSalt FROM admin WHERE adminUsername= ?";
@@ -160,6 +165,12 @@ public class AdminLoginController implements Initializable {
         return hashedPassword;
     }
 
+    /**
+     * Method to check if the hashed password is correct
+     * @param DBUsername username from DB
+     * @param hashedPassword hashed password
+     * @return boolean value
+     */
     boolean isHashedPasswordCorrectAdmin(String DBUsername, byte[] hashedPassword) throws SQLException {
         //Connection connection = getConnection();
         String query = "SELECT adminHashedPassword FROM admin WHERE adminUsername= ?";

@@ -31,7 +31,6 @@ public class EmailControl {
     private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     /**
      * Constructor to set up the default system mail
-     *
      */
     public EmailControl() throws NoSuchProviderException, MessagingException {
         this.properties = new Properties();
@@ -153,6 +152,14 @@ public class EmailControl {
         }
 
     }
+
+    /**
+     * Method to send mail with the desiring time
+     * @param time to send email
+     * @param recipientAddress the address of the receiver
+     * @param mailSubject subject of the email
+     * @param content content inside the mail
+     */
     public static void sendScheduledMail(int time, String recipientAddress, String mailSubject, String content){
         final Runnable beeper = new Runnable() {
             public void run() {

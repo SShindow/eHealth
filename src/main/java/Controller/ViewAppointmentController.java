@@ -73,6 +73,9 @@ public class ViewAppointmentController implements Initializable {
     String validColorCSS = "-fx-control-inner-background: white;";
     Appointment userAppointment = null;
 
+    /**
+     * Method to display booked appointment, loaded from DB
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String username= LoginController.loggedInUsername;

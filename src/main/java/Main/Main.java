@@ -16,7 +16,7 @@ import java.sql.Connection;
  */
 public class Main extends Application {
     /**
-     * Start method to run application, starting from file login.fxml
+     * Start method to run application, starting by loading the file login.fxml
      * @param primaryStage
      * @throws Exception
      */
@@ -33,6 +33,10 @@ public class Main extends Application {
 
     }
 
+    /**
+     * method to launch the application
+
+     */
     public static void main(String[] args) {
 
         launch();

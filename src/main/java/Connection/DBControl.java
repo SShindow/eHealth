@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 /**
  * A class to establish connection to database
- * @author Hai Cao Xuan
+ * @author Hai Cao Xuan, Hoang Dinh Minh
  */
 public class DBControl {
 
@@ -57,6 +57,11 @@ public class DBControl {
             throw new IllegalStateException("Cannot find the driver in the classpath!", e);
         }
     }
+
+    /**
+     * Method to connect Database with return connection
+     * @return connection
+     */
     public static Connection connectToDatabaseWithReturnConnection() throws SQLException {
         final String HOSTNAME = "ehealth-db.cqajckw84dii.us-east-1.rds.amazonaws.com";
         final String PORT = "3306";

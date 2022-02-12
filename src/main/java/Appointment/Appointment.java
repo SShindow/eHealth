@@ -19,8 +19,22 @@ public class Appointment {
     private String sessionStartTime;
     private String sessionEndTime;
 
+    /**
+     * Null constructor
+     */
     public Appointment(){}
 
+    /**
+     * Method to construct appointment
+     * @param appointmentID ID of the appointment generated automatically
+     * @param patientID ID of the patients (users)
+     * @param doctorID ID of the doctor
+     * @param healthDeptName Department of the doctor
+     * @param healthDescription short description about health status of user
+     * @param sessionStartDate date of the appointment
+     * @param sessionStartTime start time of the appointment
+     * @param sessionEndTime end time of the appointment
+     */
     public Appointment(String appointmentID, String patientID, String doctorID, String healthDeptName,
                        String healthDescription, String sessionStartDate,
                        String sessionStartTime, String sessionEndTime) {
@@ -78,9 +92,22 @@ public class Appointment {
         return doctorID;
     }
 
+    /**
+     * Setter for start date
+     * @param sessionStartDate date of appointment
+     */
     public void setSessionStartDate(String sessionStartDate){this.sessionStartDate=sessionStartDate;}
+
+    /**
+     * Getter to return appointment date
+     * @return appointment date
+     */
     public String getSessionStartDate(){return sessionStartDate;}
 
+    /**
+     * Setter for the department name
+     * @param healthDeptName name of the department
+     */
     public void setHealthDeptName(String healthDeptName) {
         this.healthDeptName = healthDeptName;
     }

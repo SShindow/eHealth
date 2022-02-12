@@ -242,6 +242,10 @@ public class ListDoctorController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method to get the UI stage
+     * @return UI stage
+     */
     public static Stage getStage() {
         return guiStage;
     }

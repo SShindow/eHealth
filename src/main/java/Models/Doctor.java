@@ -18,10 +18,10 @@ public class Doctor {
 
     /**
      * Constructor for fetching doctor from database
-     * @param firstName
-     * @param lastName
-     * @param address
-     * @param clinicName
+     * @param firstName is the firstname of the doctor
+     * @param lastName is the lastname of the doctor
+     * @param address is located by longitude and latitude of the doctor
+     * @param clinicName is where the doctor working
      */
     public Doctor(String firstName, String lastName, String address, String clinicName) {
         this.firstName = firstName;
@@ -33,12 +33,12 @@ public class Doctor {
     /**
      * Constructor to create a doctor
      * @author Hai Cao Xuan
-     * @param firstName
-     * @param lastName
-     * @param address
-     * @param clinicName
-     * @param clinicLongitude
-     * @param clinicLatitude
+     * @param firstName is the firstname of the doctor
+     * @param lastName is the lastname of the doctor
+     * @param address is located by longitude and latitude of the doctor
+     * @param clinicName is where the doctor working
+     * @param clinicLongitude is the longitude of the doctor workplace
+     * @param clinicLatitude is the latitude of the doctor workplace
      */
     public Doctor(String firstName, String lastName, String address, String clinicName, double clinicLongitude, double clinicLatitude)
     {
@@ -61,13 +61,13 @@ public class Doctor {
     /**
      * Constructor for creating a doctor with the ID
      * @author Hoang Dinh Minh
-     * @param doctorID
-     * @param firstName
-     * @param lastName
-     * @param address
-     * @param clinicName
-     * @param clinicLongitude
-     * @param clinicLatitude
+     * @param doctorID ID of the doctor
+     * @param firstName is the firstname of the doctor
+     * @param lastName is the lastname of the doctor
+     * @param address is located by longitude and latitude of the doctor
+     * @param clinicName is where the doctor working
+     * @param clinicLongitude is the longitude of the doctor workplace
+     * @param clinicLatitude is the latitude of the doctor workplace
      */
     public Doctor(UUID doctorID, String firstName, String lastName, String address, String clinicName, double clinicLongitude, double clinicLatitude)
     {

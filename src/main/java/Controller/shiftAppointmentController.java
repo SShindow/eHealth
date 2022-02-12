@@ -32,7 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 /**
  * Controller class of shift_appointment.fxml, for user to change their appointment time
- * @author Chau Truong Vinh Hoang
+ * @author Chau Truong Vinh Hoang, Hoang Dinh Minh
  */
 public class shiftAppointmentController {
 

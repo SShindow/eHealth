@@ -139,6 +139,9 @@ public class AdminEditUserPopupController implements Initializable {
         stage.close();
     }
 
+    /**
+     * Method to update user data
+     */
     private void updateUserData() throws SQLException {
         PreparedStatement statement = DBControl.dbConnection.prepareStatement(UserUpdateStatement);
 

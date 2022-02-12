@@ -79,9 +79,18 @@ public class AppointmentTimeController implements Initializable {
     private String userChoosenReminder="";
     private String reminder_time="";
 
+    /**
+     * Default set for the appointment ID
+     */
     public static String appointmentID=null;
+    /**
+     * static method for selected doctor
+     */
     public static Doctor selectedDoctor;
 
+    /**
+     * Method to check if the startdate is valid
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setUpSessionSelections();
@@ -156,6 +165,10 @@ public class AppointmentTimeController implements Initializable {
             //System.out.println("end time:"+sessionEndTime);
     }
 
+    /**
+     * Method to set reminder on action
+     * @param event when interact with the reminder box
+     */
     public void selectReminderOnAction(ActionEvent event) {
         reminder_time_selection.getItems().add(r1);
         reminder_time_selection.getItems().add(r2);
@@ -351,6 +364,10 @@ public class AppointmentTimeController implements Initializable {
     }
 
 
+    /**
+     * Method to initialize selected doctor data
+     * @param doctor object doctor
+     */
     public void initDoctorData(Doctor doctor) {
         selectedDoctor = doctor;
         System.out.println("Doctor ID:"+selectedDoctor.getDoctorID());
