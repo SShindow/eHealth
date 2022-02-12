@@ -10,6 +10,7 @@ package Appointment;
  * @author Chau Truong Vinh Hoang
  */
 public class Appointment {
+    private String appointmentID;
     private String patientID;
     private String doctorID;
     private String healthDeptName;
@@ -17,6 +18,33 @@ public class Appointment {
     private String sessionStartDate;
     private String sessionStartTime;
     private String sessionEndTime;
+
+    public Appointment(){}
+
+    public Appointment(String appointmentID, String patientID, String doctorID, String healthDeptName,
+                       String healthDescription, String sessionStartDate,
+                       String sessionStartTime, String sessionEndTime) {
+        this.appointmentID = appointmentID;
+        this.patientID = patientID;
+        this.doctorID = doctorID;
+        this.healthDeptName = healthDeptName;
+        this.healthDescription = healthDescription;
+        this.sessionStartDate = sessionStartDate;
+        this.sessionStartTime = sessionStartTime;
+        this.sessionEndTime = sessionEndTime;
+    }
+
+    /**
+     * Getter for appointmentID
+     * @return
+     */
+    public String getAppointmentID() {return appointmentID;}
+
+    /**
+     * Setter for appointmentID
+     * @param appointmentID
+     */
+    public void setAppointmentID(String appointmentID) {this.appointmentID = appointmentID;}
 
     /**
      * Setter for Patient ID

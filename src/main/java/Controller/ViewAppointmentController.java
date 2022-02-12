@@ -23,6 +23,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+
+import static Controller.AppointmentTimeController.appointmentID;
+
 /**
  * Controller class of view_appointment.fxml, for user to view their appointment if any
  * @author Chau Truong Vinh Hoang
@@ -39,8 +42,6 @@ public class ViewAppointmentController implements Initializable {
     @FXML
     private Button button_cancel;
 
-    @FXML
-    private Button button_show;
     @FXML
     private Button button_shift;
 
@@ -68,12 +69,15 @@ public class ViewAppointmentController implements Initializable {
     @FXML
     private Text start_time_field;
 
+    String invalidColorCSS = "-fx-control-inner-background: red;";
+    String validColorCSS = "-fx-control-inner-background: white;";
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String username= LoginController.loggedInUsername;
         Appointment userAppointment = null;
         try {
-            userAppointment = getAppointment(username);
+            userAppointment = getAppointmentFromDB(username);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -166,24 +170,28 @@ public class ViewAppointmentController implements Initializable {
     }
 
 
-    private static Appointment getAppointment(String username) throws SQLException {
-        Statement stmt = DBControl.dbConnection.createStatement();
-        //select * from appointment where patientID in
-        //(select accountID from user
-        //where username ='chautruong12345');
-        String sql = "select * from appointment where patientID in (select accountID from user "+
-                "where username ='"+username+"');";
-        ResultSet rs = stmt.executeQuery(sql);
-        Appointment appointment = new Appointment();
-        while(rs.next()){
-            appointment.setPatientID(rs.getString(2));
-            appointment.setDoctorID(rs.getString(3));
-            appointment.setHealthDeptName(rs.getString(4));
-            appointment.setHealthDescription(rs.getString(5));
-            appointment.setSessionStartDate(rs.getString(6));
-            appointment.setSessionStartTime(rs.getString(7));
-            appointment.setSessionEndTime(rs.getString(8));
-        }
+    private static Appointment getAppointmentFromDB(String username) throws SQLException {
+        String sql = "SELECT * FROM appointment a "
+                + "INNER JOIN user u ON a.patientID = u.accountID "
+                + "WHERE u.username = ?";
+        PreparedStatement stmt = DBControl.dbConnection.prepareStatement(sql);
+
+        stmt.setString(1, username);
+        ResultSet rs = stmt.executeQuery();
+
+        rs.next();
+        String appointmentID = rs.getString(1);
+        String patientID = rs.getString(2);
+        String doctorID = rs.getString(3);
+        String healthDeptName = rs.getString(4);
+        String healthDescription = rs.getString(5);
+        var sessionDate = rs.getDate(6);
+        var startTime = rs.getTime(7);
+        var endTime = rs.getTime(8);
+
+        Appointment appointment = new Appointment(appointmentID, patientID, doctorID, healthDeptName, healthDescription,
+                sessionDate.toString(), startTime.toString(), endTime.toString());
+
         return appointment;
     }
     /**
@@ -194,7 +202,7 @@ public class ViewAppointmentController implements Initializable {
     @FXML
     void showButtonOnAction(ActionEvent event) throws SQLException {
         String username= LoginController.loggedInUsername;
-        Appointment userAppointment = getAppointment(username);
+        Appointment userAppointment = getAppointmentFromDB(username);
         if(userAppointment.getPatientID()==""){
             label_caution_show.setText("You haven't book any appointment yet");
             label_caution_show.setTextFill(Color.RED);
