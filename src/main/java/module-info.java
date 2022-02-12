@@ -11,11 +11,11 @@ module com.example.test {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
-    requires java.mail;
     requires kernel;
     requires layout;
     requires io;
     requires activation;
+    requires java.mail;
 
     opens Controller to javafx.fxml;
     exports Controller;
