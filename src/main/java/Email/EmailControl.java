@@ -31,7 +31,7 @@ public class EmailControl {
     private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     /**
      * Constructor to set up the default system mail
-     * @throws java.security.NoSuchAlgorithmException, MessagingException catch exception if any
+     *
      */
     public EmailControl() throws NoSuchProviderException, MessagingException {
         this.properties = new Properties();
@@ -50,7 +50,6 @@ public class EmailControl {
      * Constructor set up the sender mail
      * @param username specify mail address
      * @param pwd specify mail corresponding password.
-     * @throws java.security.NoSuchAlgorithmException, MessagingException catch exception if any
      */
     public EmailControl(String username, String pwd) throws NoSuchProviderException, MessagingException {
         this.username = username;
@@ -213,7 +212,7 @@ public class EmailControl {
     /**
      * Method to notify user through email when they create an appointment successfully
      * @param username specify the username
-     * @throws SQLException, MessagingException catch exception if any
+     *
      */
     public static void sendAppointmentCreateSuccessfully(String username) throws SQLException, MessagingException {
         String recipientAddress = getUserEmail(username);
@@ -226,7 +225,7 @@ public class EmailControl {
     /**
      * Method to notify user through email when they update their appointment successfully
      * @param username specify the username
-     * @throws SQLException, MessagingException catch exception if any
+     *
      */
     public static void sendAppointmentUpdatedSuccessfully(String username) throws SQLException, MessagingException {
         String recipientAddress = getUserEmail(username);
@@ -240,7 +239,7 @@ public class EmailControl {
      * Method to notify user through email about their upcomming appointment
      * @param username specify the username
      * @param reminder_time specify the reminder time
-     * @throws SQLException, MessagingException catch exception if any
+     *
      */
     public static void sendMailReminder(String username, int reminder_time) throws SQLException, MessagingException {
         String recipientAddress = getUserEmail(username);
