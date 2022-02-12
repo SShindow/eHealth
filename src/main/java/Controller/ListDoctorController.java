@@ -64,6 +64,8 @@ public class ListDoctorController implements Initializable {
     @FXML
     private ImageView image_background;
 
+    private static Stage guiStage;
+
 
     /**
      * Method to execute action on click
@@ -238,6 +240,10 @@ public class ListDoctorController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static Stage getStage() {
+        return guiStage;
     }
 
 }

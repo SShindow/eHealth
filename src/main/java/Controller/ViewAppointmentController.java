@@ -71,21 +71,30 @@ public class ViewAppointmentController implements Initializable {
 
     String invalidColorCSS = "-fx-control-inner-background: red;";
     String validColorCSS = "-fx-control-inner-background: white;";
+    Appointment userAppointment = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String username= LoginController.loggedInUsername;
-        Appointment userAppointment = null;
         try {
             userAppointment = getAppointmentFromDB(username);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if(userAppointment.getPatientID()==""){
-            label_caution_show.setText("You haven't book any appointment yet");
-            label_caution_show.setTextFill(Color.RED);
+        if(userAppointment == null)
+        {
+            button_cancel.setDisable(true);
+            button_shift.setDisable(true);
             return;
         }
+
+            if(userAppointment.getPatientID()==""){
+                label_caution_show.setText("You haven't book any appointment yet");
+                label_caution_show.setTextFill(Color.RED);
+                return;
+            }
+
+
         String patientName = null;
         Statement stmt = null;
         try {
@@ -93,6 +102,7 @@ public class ViewAppointmentController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         String sql = "select firstName, lastName from user where accountID='"+userAppointment.getPatientID()+"'";
         ResultSet rs = null;
         try {
@@ -153,6 +163,7 @@ public class ViewAppointmentController implements Initializable {
         start_date_field.setText(userAppointment.getSessionStartDate());
         start_time_field.setText(userAppointment.getSessionStartTime());
         end_time_field.setText(userAppointment.getSessionEndTime());
+
     }
     /**
      * Method which allow user to get back to after login scene on click
@@ -170,7 +181,7 @@ public class ViewAppointmentController implements Initializable {
     }
 
 
-    private static Appointment getAppointmentFromDB(String username) throws SQLException {
+    private Appointment getAppointmentFromDB(String username) throws SQLException {
         String sql = "SELECT * FROM appointment a "
                 + "INNER JOIN user u ON a.patientID = u.accountID "
                 + "WHERE u.username = ?";
@@ -178,6 +189,11 @@ public class ViewAppointmentController implements Initializable {
 
         stmt.setString(1, username);
         ResultSet rs = stmt.executeQuery();
+
+        if (!rs.isBeforeFirst() ) {
+            System.out.println("No appointment");
+            return null;
+        }
 
         rs.next();
         String appointmentID = rs.getString(1);
@@ -191,6 +207,8 @@ public class ViewAppointmentController implements Initializable {
 
         Appointment appointment = new Appointment(appointmentID, patientID, doctorID, healthDeptName, healthDescription,
                 sessionDate.toString(), startTime.toString(), endTime.toString());
+
+        button_cancel.setDisable(false);
 
         return appointment;
     }
@@ -267,6 +285,8 @@ public class ViewAppointmentController implements Initializable {
         }
 
     }
+
+
     /**
      * Method to allow user to cancel their appointment
      * @param event when clicking on Cancel button
@@ -296,6 +316,8 @@ public class ViewAppointmentController implements Initializable {
         if(exception==null){
             label_caution_show_final.setText("You have deleted your appointment");
             label_caution_show_final.setTextFill(Color.GREEN);
+            button_cancel.setDisable(true);
+            button_shift.setDisable(true);
             return;
         }
     }

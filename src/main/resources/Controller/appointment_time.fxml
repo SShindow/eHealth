@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AppointmentTimeController">
@@ -21,6 +20,5 @@
         <Button fx:id="back_button" layoutX="27.0" layoutY="25.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefHeight="26.0" prefWidth="66.0" style="-fx-background-color: #4BBFE6;" text="Back" textFill="WHITE" />
         <Button fx:id="check_available_button" layoutX="254.0" layoutY="105.0" mnemonicParsing="false" onAction="#checkAvailableButtonOnAction" prefHeight="26.0" prefWidth="108.0" text="Check Available" />
         <Label fx:id="label_caution_message_2" layoutX="132.0" layoutY="286.0" prefHeight="17.0" prefWidth="336.0" />
-        <Button fx:id="go_to_menu" layoutX="252.0" layoutY="337.0" mnemonicParsing="false" onAction="#goToMenuOnAction" prefHeight="26.0" prefWidth="96.0" style="-fx-background-color: #4BBFE6;" text="Go to Menu" textFill="WHITE" />
     </children>
 </AnchorPane>

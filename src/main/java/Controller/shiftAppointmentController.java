@@ -5,6 +5,7 @@ import Appointment.PDFAppointmentControl;
 import Connection.DBControl;
 import Email.EmailControl;
 import Models.Doctor;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -186,6 +187,54 @@ public class shiftAppointmentController {
         };
         return myEvent;
     }
+
+    private void shiftAppointment() {
+        String sessionDate = String.valueOf(calendar_field.getValue());
+
+        SQLException exception=null;
+        try {
+            updateAppointmentTime(sessionDate, sessionStartTime,sessionEndTime);
+        } catch (SQLException e) {
+            exception=e;
+            System.out.println("User enter wrong field");
+
+            Platform.runLater(() -> {
+                label_caution_message_2.setText("Please check available and set up all requirements!");
+                label_caution_message_2.setTextFill(Color.RED);
+            });
+        }
+        //System.out.println(exception);
+        if (exception==null) {
+            System.out.println("User update appointment!");
+
+            Platform.runLater(() -> {
+                label_caution_message_2.setText("You have updated your appointment! Back to main menu");
+                label_caution_message_2.setTextFill(Color.GREEN);
+
+                try {
+                    appointmentID = getAppointmentID(LoginController.loggedInUsername);
+                    PDFAppointmentControl.createPDFAppointment(appointmentID);
+                    EmailControl.sendAppointmentUpdatedSuccessfully(LoginController.loggedInUsername);
+
+                    if(reminder_time.contains("1 min")==true){
+                        System.out.println("Reminder time contains 1 min");
+                        EmailControl.sendMailReminder(LoginController.loggedInUsername, 60);
+                    }
+                    if(reminder_time.contains("2 min")==true){
+                        EmailControl.sendMailReminder(LoginController.loggedInUsername, 120);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+        Platform.runLater(() -> {
+            button_apply.setDisable(false);
+        });
+    }
     /**
      * Method to allow user apply the update information of appointment on click
      * @param event when clicking on apply button
@@ -197,45 +246,11 @@ public class shiftAppointmentController {
         System.out.println("end time final:"+sessionEndTime);
          */
 
-        String sessionDate = String.valueOf(calendar_field.getValue());
+        button_apply.setDisable(true);
 
-
-
-        SQLException exception=null;
-        try {
-            updateAppointmentTime(sessionDate, sessionStartTime,sessionEndTime);
-        } catch (SQLException e) {
-            exception=e;
-            System.out.println("User enter wrong field");
-
-            label_caution_message_2.setText("Please check available and set up all requirements!");
-            label_caution_message_2.setTextFill(Color.RED);
-        }
-        //System.out.println(exception);
-        if (exception==null) {
-            System.out.println("User update appointment!");
-            label_caution_message_2.setText("You have updated your appointment! Back to main menu");
-            label_caution_message_2.setTextFill(Color.GREEN);
-            try {
-                appointmentID = getAppointmentID(LoginController.loggedInUsername);
-                PDFAppointmentControl.createPDFAppointment(appointmentID);
-                EmailControl.sendAppointmentUpdatedSuccessfully(LoginController.loggedInUsername);
-
-                if(reminder_time.contains("1 min")==true){
-                    System.out.println("Reminder time contains 1 min");
-                    EmailControl.sendMailReminder(LoginController.loggedInUsername, 60);
-                }
-                if(reminder_time.contains("2 min")==true){
-                    EmailControl.sendMailReminder(LoginController.loggedInUsername, 120);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (MessagingException e) {
-                e.printStackTrace();
-            }
-
-
-        }
+        new Thread(() -> {
+            shiftAppointment();
+        }).start();
     }
     private static String getAppointmentID(String username) throws SQLException {
         String appointmentID=null;

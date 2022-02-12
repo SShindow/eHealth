@@ -60,8 +60,6 @@ public class AppointmentTimeController implements Initializable {
     @FXML
     private SplitMenuButton session_selection;
 
-    @FXML
-    private Button go_to_menu;
 
     private MenuItem s1 = new MenuItem("From 8:00 to 9:00");
     private MenuItem s2 = new MenuItem("From 9:30 to 10:30");
@@ -218,7 +216,7 @@ public class AppointmentTimeController implements Initializable {
         //System.out.println(sql);
         SQLException exception=null;
         try {
-            addAppointment2Database(sql);
+            addAppointmentToDatabase(sql);
         } catch (SQLException e) {
             exception=e;
             System.out.println("User enter wrong field");
@@ -261,7 +259,7 @@ public class AppointmentTimeController implements Initializable {
         }
         return email;
     }
-    private void addAppointment2Database(String sql) throws SQLException {
+    private void addAppointmentToDatabase(String sql) throws SQLException {
         Statement stmt = DBControl.dbConnection.createStatement();
         int rs = stmt.executeUpdate(sql);
     }
@@ -281,25 +279,10 @@ public class AppointmentTimeController implements Initializable {
      * @throws IOException when encounter an I/O exception to some sort has occurred
      * */
     public void backButtonOnAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("list_doctor.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Stage stage1 = (Stage) back_button.getScene().getWindow();
+        stage1.close();
     }
-    /**
-     * Method to switch user to after login scene on click
-     * @param event when clicking on Go To Menu button
-     * @throws IOException when encounter an I/O exception to some sort has occurred
-     * */
-    @FXML
-    void goToMenuOnAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("after_login.fxml"));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+
     /**
      * Method to notify if user enter a valid date or if their desired doctor is available on that date
      * @param event when clicking on Check Available button
